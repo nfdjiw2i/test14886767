@@ -183,6 +183,13 @@ footer{border-top:1px solid var(--bd);padding:14px 24px;display:flex;justify-con
 @media(max-width:600px){.place-hero{grid-template-columns:1fr}}
 .place-icon{width:100%;aspect-ratio:1;border-radius:14px;border:1px solid var(--bd);background:var(--s1);object-fit:cover}
 .stat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:16px}
+
+.play-btn{display:inline-flex;align-items:center;justify-content:center;padding:6px 12px;border-radius:8px;background:#fff;color:#000;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:11px;letter-spacing:.04em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;white-space:nowrap}
+.play-btn:hover{background:#e8e8e8}
+.view-btn{display:inline-flex;align-items:center;justify-content:center;padding:6px 12px;border-radius:8px;background:transparent;color:var(--tx);font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:11px;letter-spacing:.04em;text-decoration:none;border:1px solid var(--bd2);cursor:pointer;white-space:nowrap}
+.view-btn:hover{border-color:#555;background:var(--s2)}
+.view-btn-lg{padding:12px 18px;font-size:12px;width:100%;margin-top:8px;box-sizing:border-box;display:flex}
+.play-btn-lg{padding:12px 18px;font-size:12px;width:100%;margin-top:8px;box-sizing:border-box}
 </style>
 </head>
 <body>
@@ -338,6 +345,43 @@ const archiveTimers={};
 const archiveLogs={};
 try{const r=lsGet('rbx_archive');const o=r?JSON.parse(r):{};Object.assign(archiveLogs,o||{});}catch(e){}
 
+function viewUrl(placeId){
+  return 'https://www.roblox.com/games/'+placeId;
+}
+function playProtocol(placeId){
+  return 'roblox://experiences/start?placeId='+encodeURIComponent(placeId);
+}
+function playBtn(placeId){
+  if(!placeId)return '';
+  // No new tab — only native Roblox protocol
+  return `<button type="button" class="play-btn" onclick="event.stopPropagation();launchPlay('${placeId}')">▶ Play</button>`;
+}
+function viewBtn(placeId){
+  if(!placeId)return '';
+  return `<a class="view-btn" href="${viewUrl(placeId)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">View on Roblox</a>`;
+}
+function launchPlay(placeId){
+  if(!placeId)return;
+  const proto=playProtocol(placeId);
+  // 1) hidden iframe (does not open a browser tab)
+  try{
+    const iframe=document.createElement('iframe');
+    iframe.style.cssText='display:none;width:0;height:0;border:0';
+    iframe.src=proto;
+    document.body.appendChild(iframe);
+    setTimeout(()=>{try{iframe.remove()}catch(e){}},2500);
+  }catch(e){}
+  // 2) also try location for protocol handler (same tab does not navigate away on custom protocol)
+  try{
+    const a=document.createElement('a');
+    a.href=proto;
+    a.style.display='none';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(()=>{try{a.remove()}catch(e){}},500);
+  }catch(e){}
+}
+
 async function F(url,opt={}){
   const t=encodeURIComponent(url);
   const r=await fetch(W+'/?url='+t,{method:opt.method||'GET',headers:opt.headers||{},body:opt.body||undefined});
@@ -467,9 +511,10 @@ async function scanPlace(){
 <div class="gr-list">${searchHits.slice(0,16).map(g=>{
   const pid=g.placeId||g.rootPlaceId||'';
   const nm=(g.name||'Game').replace(/</g,'&lt;');
-  return `<div class="gr-item" style="cursor:pointer" onclick="document.getElementById('q').value='${pid||g.universeId}';scanPlace()">
-<div class="gi"><div class="gn">${nm}</div><div class="gr">Place ${pid||'—'} · Universe ${g.universeId||'—'}</div></div>
-<span style="color:var(--mu2)">→</span></div>`;
+  return `<div class="gr-item" style="gap:10px">
+<div class="gi" style="cursor:pointer" onclick="document.getElementById('q').value='${pid||g.universeId}';scanPlace()"><div class="gn">${nm}</div><div class="gr">Place ${pid||'—'} · Universe ${g.universeId||'—'}</div></div>
+${pid?`<div style="display:flex;gap:6px;flex-shrink:0">${playBtn(pid)}${viewBtn(pid)}</div>`:''}
+</div>`;
 }).join('')}</div>`;
         btn.disabled=false;
         return;
@@ -582,7 +627,8 @@ async function scanPlace(){
       <div class="info-row"><span class="k">Creator</span><span class="v">${String(creatorName).replace(/</g,'&lt;')} (${creatorType})</span></div>
       <div class="info-row"><span class="k">Genre</span><span class="v">${String(genre).replace(/</g,'&lt;')}</span></div>
       <div class="info-row"><span class="k">Price</span><span class="v">${price?price+' R$':'Free'}</span></div>
-      <a class="btn-prof" href="https://www.roblox.com/games/${placeId||universeId}" target="_blank" rel="noopener">↗ Open on Roblox</a>
+      <button type="button" class="play-btn play-btn-lg" onclick="launchPlay('${placeId||gameData?.rootPlaceId||''}')">▶ Play</button>
+      <a class="view-btn view-btn-lg" href="${viewUrl(placeId||gameData?.rootPlaceId||universeId||'')}" target="_blank" rel="noopener">View on Roblox</a>
       ${creatorId&&String(creatorType).toLowerCase()==='user'?`<button class="btn-prof" style="margin-top:8px" onclick="document.getElementById('q').value='${creatorId}';setMode('player');scan()">View creator profile</button>`:''}
     </div>
   </div>
@@ -605,10 +651,10 @@ ${placesList.length?`<div class="card"><div class="card-t" style="margin-bottom:
   const isRoot=pid===rootId;
   const icon=placeIcons[pid]||'';
   const nm=String(p.name||('Place '+pid)).replace(/</g,'&lt;');
-  return `<div class="gr-item" style="gap:10px;cursor:pointer" onclick="document.getElementById('q').value='${pid}';scanPlace()">
-${icon?`<img src="${icon}" style="width:40px;height:40px;border-radius:8px;object-fit:cover;background:#222" onerror="this.style.display='none'"/>`:'<div style="width:40px;height:40px;border-radius:8px;background:#222"></div>'}
-<div class="gi"><div class="gn">${nm}${isRoot?' <span style="color:var(--gn);font-size:10px">ROOT</span>':''}</div><div class="gr">Place ID ${pid}</div></div>
-<span style="color:var(--mu2)">→</span>
+  return `<div class="gr-item" style="gap:10px">
+${icon?`<img src="${icon}" style="width:40px;height:40px;border-radius:8px;object-fit:cover;background:#222;cursor:pointer" onclick="document.getElementById('q').value='${pid}';scanPlace()" onerror="this.style.display='none'"/>`:'<div style="width:40px;height:40px;border-radius:8px;background:#222"></div>'}
+<div class="gi" style="cursor:pointer" onclick="document.getElementById('q').value='${pid}';scanPlace()"><div class="gn">${nm}${isRoot?' <span style="color:var(--gn);font-size:10px">ROOT</span>':''}</div><div class="gr">Place ID ${pid}</div></div>
+<div style="display:flex;gap:6px;flex-shrink:0">${playBtn(pid)}${viewBtn(pid)}</div>
 </div>`;
 }).join('')}</div></div>`:''}
 `;
@@ -980,7 +1026,7 @@ async function loadFavGames(uid){
       return `<div class="gr-item" style="gap:10px">
 ${icon?`<img src="${icon}" style="width:40px;height:40px;border-radius:8px;object-fit:cover;background:#222" onerror="this.style.display='none'"/>`:''}
 <div class="gi"><div class="gn">${nm}</div><div class="gr">${g.visits!=null?Number(g.visits).toLocaleString()+' visits':('ID '+place)}</div></div>
-<a href="https://www.roblox.com/games/${place}" target="_blank" rel="noopener">↗</a>
+<div style="display:flex;gap:6px;flex-shrink:0">${playBtn(place)}${viewBtn(place)}</div>
 </div>`;
     }).join('')}</div>`;
     box.style.display='block';
@@ -1025,7 +1071,7 @@ async function loadCreatedGames(uid){
       return `<div class="gr-item" style="gap:10px">
 ${icon?`<img src="${icon}" style="width:40px;height:40px;border-radius:8px;object-fit:cover;background:#222" onerror="this.style.display='none'"/>`:''}
 <div class="gi"><div class="gn">${nm}</div><div class="gr">${(g.placeVisits!=null?Number(g.placeVisits).toLocaleString()+' visits':'')}</div></div>
-<a href="https://www.roblox.com/games/${place}" target="_blank" rel="noopener">↗</a>
+<div style="display:flex;gap:6px;flex-shrink:0">${playBtn(place)}${viewBtn(place)}</div>
 </div>`}).join('')}</div>`;
     box.style.display='block';btn.style.display='none';
   }catch(e){console.error(e);btn.textContent='Retry';btn.disabled=false}
