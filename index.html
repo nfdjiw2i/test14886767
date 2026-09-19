@@ -1,974 +1,595 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Roblox Intel // Player Dossier Lookup</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --bg: #050505;
-      --surface: #0d0d0d;
-      --surface2: #141414;
-      --border: #1f1f1f;
-      --border-hover: #2a2a2a;
-      --text: #f5f5f5;
-      --muted: #8a8a8a;
-      --muted2: #5a5a5a;
-      --accent: #e8e8e8;
-      --green: #22c55e;
-      --yellow: #eab308;
-      --red: #ef4444;
-      --blue: #3b82f6;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    /* Header */
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 28px;
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      background: rgba(5,5,5,0.92);
-      backdrop-filter: blur(12px);
-      z-index: 50;
-    }
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 600;
-      font-size: 13px;
-      letter-spacing: 0.04em;
-      color: var(--text);
-      text-decoration: none;
-    }
-    .logo-icon {
-      width: 28px;
-      height: 28px;
-      border-radius: 8px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      display: grid;
-      place-items: center;
-      font-size: 14px;
-    }
-    nav {
-      display: flex;
-      gap: 6px;
-    }
-    nav button {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      padding: 8px 16px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-      background: transparent;
-      color: var(--muted);
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    nav button:hover { color: var(--text); }
-    nav button.active {
-      background: #fff;
-      color: #000;
-      border-color: #fff;
-    }
-    /* Main */
-    main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 40px 20px 80px;
-    }
-    .panel { width: 100%; max-width: 720px; display: none; }
-    .panel.active { display: block; }
-    /* Lookup hero */
-    .hero {
-      text-align: center;
-      margin-top: 60px;
-    }
-    .hero-icon {
-      width: 56px;
-      height: 56px;
-      margin: 0 auto 28px;
-      border-radius: 14px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      display: grid;
-      place-items: center;
-      font-size: 24px;
-      color: var(--muted);
-    }
-    .hero h1 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 700;
-      font-size: clamp(2.4rem, 6vw, 3.6rem);
-      line-height: 1.05;
-      letter-spacing: -0.03em;
-      margin-bottom: 16px;
-    }
-    .hero p {
-      color: var(--muted);
-      font-size: 15px;
-      margin-bottom: 36px;
-      line-height: 1.5;
-    }
-    .search-row {
-      display: flex;
-      gap: 10px;
-      max-width: 480px;
-      margin: 0 auto;
-    }
-    .search-wrap {
-      flex: 1;
-      position: relative;
-    }
-    .search-wrap input {
-      width: 100%;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 14px 16px 14px 42px;
-      color: var(--text);
-      font-size: 15px;
-      font-family: inherit;
-      outline: none;
-      transition: border-color 0.15s;
-    }
-    .search-wrap input:focus { border-color: #444; }
-    .search-wrap input::placeholder { color: var(--muted2); }
-    .search-wrap .icon {
-      position: absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--muted2);
-      font-size: 16px;
-      pointer-events: none;
-    }
-    .btn {
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 600;
-      font-size: 13px;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      padding: 14px 22px;
-      border-radius: 12px;
-      border: none;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.15s;
-      white-space: nowrap;
-    }
-    .btn-primary {
-      background: #2a2a2a;
-      color: #fff;
-      border: 1px solid #3a3a3a;
-    }
-    .btn-primary:hover:not(:disabled) { background: #3a3a3a; }
-    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
-    .hint {
-      margin-top: 14px;
-      font-size: 12px;
-      color: var(--muted2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-    }
-    .kbd {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 5px;
-      padding: 2px 6px;
-      color: var(--muted);
-    }
-    /* Results */
-    #results { display: none; margin-top: 48px; width: 100%; max-width: 720px; }
-    .dossier {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-    }
-    .dossier-top {
-      display: flex;
-      gap: 24px;
-      padding: 28px;
-      border-bottom: 1px solid var(--border);
-      flex-wrap: wrap;
-    }
-    .avatar-wrap {
-      position: relative;
-      flex-shrink: 0;
-    }
-    .avatar-wrap img {
-      width: 120px;
-      height: 120px;
-      border-radius: 16px;
-      background: var(--surface2);
-      object-fit: cover;
-      border: 1px solid var(--border);
-    }
-    .presence-dot {
-      position: absolute;
-      bottom: 6px;
-      right: 6px;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      border: 3px solid var(--surface);
-    }
-    .presence-dot.online { background: var(--green); }
-    .presence-dot.ingame { background: var(--blue); }
-    .presence-dot.studio { background: var(--yellow); }
-    .presence-dot.offline { background: #555; }
-    .user-meta { flex: 1; min-width: 200px; }
-    .user-meta h2 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.6rem;
-      font-weight: 700;
-      margin-bottom: 4px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .badge-tag {
-      font-size: 11px;
-      font-weight: 600;
-      padding: 3px 8px;
-      border-radius: 6px;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-    .badge-tag.premium { background: #fbbf24; color: #000; }
-    .badge-tag.banned { background: var(--red); color: #fff; }
-    .user-id {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 12px;
-    }
-    .user-desc {
-      font-size: 14px;
-      color: var(--muted);
-      line-height: 1.5;
-      max-height: 60px;
-      overflow: hidden;
-    }
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      border-bottom: 1px solid var(--border);
-    }
-    .stat {
-      padding: 18px 20px;
-      text-align: center;
-      border-right: 1px solid var(--border);
-    }
-    .stat:last-child { border-right: none; }
-    .stat-val {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.4rem;
-      font-weight: 700;
-    }
-    .stat-label {
-      font-size: 11px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-top: 4px;
-    }
-    .section {
-      padding: 22px 28px;
-      border-bottom: 1px solid var(--border);
-    }
-    .section:last-child { border-bottom: none; }
-    .section-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 14px;
-    }
-    .presence-box {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: var(--surface2);
-      border-radius: 10px;
-      padding: 14px 16px;
-    }
-    .presence-status {
-      font-weight: 600;
-      font-size: 14px;
-    }
-    .presence-detail {
-      font-size: 13px;
-      color: var(--muted);
-    }
-    .badges-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    .badge-item {
-      width: 56px;
-      height: 56px;
-      border-radius: 10px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      overflow: hidden;
-    }
-    .badge-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .created {
-      font-size: 13px;
-      color: var(--muted);
-      font-family: 'JetBrains Mono', monospace;
-    }
-    /* Connection */
-    .conn-hero { text-align: center; margin-top: 40px; }
-    .conn-hero .label {
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-    }
-    .conn-hero h1 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 12px;
-    }
-    .conn-hero p {
-      color: var(--muted);
-      font-size: 14px;
-      max-width: 420px;
-      margin: 0 auto 32px;
-      line-height: 1.5;
-    }
-    .conn-inputs {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-    .field label {
-      display: block;
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-    .field input {
-      width: 100%;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px 14px;
-      color: var(--text);
-      font-size: 14px;
-      outline: none;
-    }
-    .field input:focus { border-color: #444; }
-    .btn-full {
-      width: 100%;
-      justify-content: center;
-      padding: 14px;
-      background: #2a2a2a;
-      color: #fff;
-      border: 1px solid #3a3a3a;
-      border-radius: 12px;
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 600;
-      font-size: 13px;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      cursor: pointer;
-    }
-    .btn-full:hover { background: #3a3a3a; }
-    /* My Roblox */
-    .my-hero { margin-top: 40px; }
-    .my-hero .label {
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .my-hero h1 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 24px;
-    }
-    .link-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 24px;
-    }
-    .link-card .title {
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 12px;
-    }
-    .link-row {
-      display: flex;
-      gap: 10px;
-    }
-    .link-row input {
-      flex: 1;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px 14px;
-      color: var(--text);
-      font-size: 14px;
-      outline: none;
-    }
-    .link-note {
-      margin-top: 12px;
-      font-size: 13px;
-      color: var(--muted2);
-      line-height: 1.4;
-    }
-    /* Error / loading */
-    .status-msg {
-      margin-top: 24px;
-      text-align: center;
-      font-size: 14px;
-      color: var(--muted);
-    }
-    .status-msg.error { color: var(--red); }
-    .spinner {
-      width: 20px;
-      height: 20px;
-      border: 2px solid #333;
-      border-top-color: #fff;
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-      display: inline-block;
-      vertical-align: middle;
-      margin-right: 8px;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 16px 28px;
-      display: flex;
-      justify-content: space-between;
-      font-size: 11px;
-      color: var(--muted2);
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-    /* Config bar (for worker URL) */
-    .config-bar {
-      background: #111;
-      border-bottom: 1px solid var(--border);
-      padding: 8px 28px;
-      font-size: 12px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: var(--muted);
-    }
-    .config-bar input {
-      flex: 1;
-      max-width: 420px;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 6px 10px;
-      color: var(--text);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      outline: none;
-    }
-    .config-bar button {
-      font-size: 11px;
-      padding: 6px 12px;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-      background: var(--surface2);
-      color: var(--text);
-      cursor: pointer;
-    }
-    @media (max-width: 600px) {
-      .conn-inputs { grid-template-columns: 1fr; }
-      .stats-row { grid-template-columns: 1fr; }
-      .stat { border-right: none; border-bottom: 1px solid var(--border); }
-      .dossier-top { flex-direction: column; align-items: center; text-align: center; }
-      .user-meta h2 { justify-content: center; }
-    }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Roblox Intel // Player Dossier Lookup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#070707;--s1:#0e0e0e;--s2:#151515;--s3:#1a1a1a;--bd:#222;--bd2:#2a2a2a;--tx:#f0f0f0;--mu:#888;--mu2:#555;--gn:#22c55e;--bl:#3b82f6;--yl:#eab308;--rd:#ef4444}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;display:flex;flex-direction:column}
+header{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;border-bottom:1px solid var(--bd);position:sticky;top:0;background:rgba(7,7,7,.94);backdrop-filter:blur(14px);z-index:60;gap:12px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;letter-spacing:.04em;color:var(--tx);text-decoration:none;cursor:pointer}
+.logo-i{width:26px;height:26px;border-radius:7px;background:var(--s2);border:1px solid var(--bd);display:grid;place-items:center;font-size:13px}
+nav{display:flex;gap:5px}
+nav button{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;padding:7px 14px;border-radius:999px;border:1px solid transparent;background:transparent;color:var(--mu);cursor:pointer;transition:.15s}
+nav button:hover{color:var(--tx)}
+nav button.on{background:#fff;color:#000}
+.hdr-r{display:flex;gap:6px}
+.hdr-r button{font-size:11px;font-weight:600;letter-spacing:.05em;padding:7px 12px;border-radius:8px;border:1px solid var(--bd);background:var(--s2);color:var(--mu);cursor:pointer;display:flex;align-items:center;gap:5px}
+.hdr-r button:hover{color:var(--tx);border-color:var(--bd2)}
+main{flex:1;padding:28px 20px 60px;max-width:1100px;width:100%;margin:0 auto}
+.panel{display:none}.panel.on{display:block}
+.hero{text-align:center;padding:50px 0 30px}
+.hero-i{width:52px;height:52px;margin:0 auto 24px;border-radius:12px;background:var(--s2);border:1px solid var(--bd);display:grid;place-items:center;font-size:22px;color:var(--mu)}
+.hero h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2.2rem,5.5vw,3.4rem);line-height:1.05;letter-spacing:-.03em;margin-bottom:14px}
+.hero p{color:var(--mu);font-size:14px;margin-bottom:32px;line-height:1.5}
+.srch{display:flex;gap:8px;max-width:460px;margin:0 auto}
+.srch-w{flex:1;position:relative}
+.srch-w input{width:100%;background:var(--s1);border:1px solid var(--bd);border-radius:11px;padding:13px 14px 13px 40px;color:var(--tx);font-size:14px;font-family:inherit;outline:none}
+.srch-w input:focus{border-color:#3a3a3a}
+.srch-w input::placeholder{color:var(--mu2)}
+.srch-w .ic{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--mu2);font-size:15px;pointer-events:none}
+.btn{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:12px;letter-spacing:.05em;text-transform:uppercase;padding:13px 20px;border-radius:11px;border:1px solid #333;background:#222;color:#fff;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:.15s;white-space:nowrap}
+.btn:hover:not(:disabled){background:#2e2e2e}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn-w{background:#fff;color:#000;border-color:#fff}
+.btn-w:hover:not(:disabled){background:#e8e8e8}
+.hint{margin-top:12px;font-size:11px;color:var(--mu2);display:flex;align-items:center;justify-content:center;gap:5px}
+.kbd{font-family:'JetBrains Mono',monospace;font-size:10px;background:var(--s2);border:1px solid var(--bd);border-radius:4px;padding:2px 5px;color:var(--mu)}
+.st{margin-top:18px;text-align:center;font-size:13px;color:var(--mu)}.st.err{color:var(--rd)}
+.sp{width:16px;height:16px;border:2px solid #333;border-top-color:#fff;border-radius:50%;animation:sp .65s linear infinite;display:inline-block;vertical-align:middle;margin-right:6px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.dossier{display:none}
+.sub-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mu2);margin-bottom:6px}
+.sub-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.8rem;letter-spacing:.02em;margin-bottom:20px;word-break:break-all}
+.grid-top{display:grid;grid-template-columns:220px 1fr;gap:16px;margin-bottom:16px}
+@media(max-width:720px){.grid-top{grid-template-columns:1fr}}
+.av-card{background:var(--s1);border:1px solid var(--bd);border-radius:14px;overflow:hidden;position:relative;aspect-ratio:1;display:flex;align-items:center;justify-content:center}
+.av-card::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:24px 24px;pointer-events:none}
+.av-card img{width:92%;height:92%;object-fit:contain;position:relative;z-index:1}
+.r-col{display:flex;flex-direction:column;gap:10px}
+.card{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:14px 16px}
+.card-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.card-t{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mu);display:flex;align-items:center;gap:6px}
+.live{font-size:10px;color:var(--mu2);display:flex;align-items:center;gap:4px}
+.live::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gn);animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.act-line{font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px}
+.act-line .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.dot.on{background:var(--gn)}.dot.game{background:var(--bl)}.dot.off{background:#555}.dot.studio{background:var(--yl)}
+.stats4{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat-c{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:14px 16px}
+.stat-c .l{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);margin-bottom:4px;display:flex;align-items:center;gap:5px}
+.stat-c .v{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;font-weight:700}
+.grid-mid{display:grid;grid-template-columns:220px 1fr;gap:16px;margin-bottom:16px}
+@media(max-width:720px){.grid-mid{grid-template-columns:1fr}}
+.info-card{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:14px 16px}
+.info-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:13px}
+.info-row .k{color:var(--mu);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.info-row .v{font-family:'JetBrains Mono',monospace;font-size:12px}
+.badge-on{background:#1a2e1a;color:var(--gn);border:1px solid #2a4a2a;font-size:10px;font-weight:600;padding:3px 8px;border-radius:6px;letter-spacing:.04em;display:inline-flex;align-items:center;gap:4px}
+.badge-on::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gn)}
+.badge-off{background:#1a1a1a;color:var(--mu);border:1px solid var(--bd);font-size:10px;font-weight:600;padding:3px 8px;border-radius:6px}
+.btn-prof{width:100%;margin-top:10px;justify-content:center;padding:10px;font-size:12px;background:var(--s2);border:1px solid var(--bd);border-radius:9px;color:var(--tx);cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:600;letter-spacing:.04em;display:flex;align-items:center;gap:6px;text-decoration:none}
+.btn-prof:hover{background:var(--s3)}
+.flags{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px}
+.flag{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:14px 12px;text-align:center}
+.flag .ic{font-size:18px;margin-bottom:6px;opacity:.7}
+.flag .l{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);margin-bottom:2px}
+.flag .v{font-size:13px;font-weight:600}
+.badges-sec{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:14px 16px;margin-bottom:16px}
+.badges-sec .hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.badges-sec .hd .t{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mu)}
+.badges-sec .hd .c{font-size:11px;color:var(--mu2)}
+.bg-grid{display:flex;flex-wrap:wrap;gap:8px}
+.bg-item{width:48px;height:48px;border-radius:8px;background:var(--s2);border:1px solid var(--bd);overflow:hidden}
+.bg-item img{width:100%;height:100%;object-fit:cover}
+.bot-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+@media(max-width:720px){.bot-row{grid-template-columns:1fr}}
+.load-card{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:16px}
+.load-card .hd{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mu);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.load-card .hd span{margin-left:auto;color:var(--mu2);font-size:11px}
+.load-btn{width:100%;padding:12px;border-radius:9px;border:1px solid var(--bd2);background:var(--s2);color:var(--tx);font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:12px;letter-spacing:.05em;text-transform:uppercase;cursor:pointer}
+.load-btn:hover{background:var(--s3)}
+.friends-box,.groups-box{display:none;margin-top:12px}
+.filter-in{width:100%;background:var(--bg);border:1px solid var(--bd);border-radius:8px;padding:9px 12px 9px 34px;color:var(--tx);font-size:13px;outline:none;margin-bottom:10px}
+.fr-wrap{position:relative}
+.fr-wrap .fic{position:absolute;left:11px;top:11px;color:var(--mu2);font-size:13px;pointer-events:none;z-index:1}
+.fr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;max-height:340px;overflow-y:auto;padding-right:4px}
+.fr-item{background:var(--s2);border:1px solid var(--bd);border-radius:10px;padding:10px 8px;text-align:center;cursor:pointer;transition:.15s}
+.fr-item:hover{border-color:#444;background:var(--s3)}
+.fr-item img{width:40px;height:40px;border-radius:50%;object-fit:cover;margin-bottom:6px;background:#222}
+.fr-item .nm{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fr-item .id{font-size:10px;color:var(--mu2);font-family:'JetBrains Mono',monospace}
+.gr-list{max-height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:2px}
+.gr-item{display:flex;align-items:center;justify-content:space-between;padding:10px 8px;border-radius:8px;transition:.12s}
+.gr-item:hover{background:var(--s2)}
+.gr-item .gi{flex:1;min-width:0}
+.gr-item .gn{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gr-item .gr{font-size:11px;color:var(--mu);margin-top:2px}
+.gr-item a{color:var(--mu2);font-size:14px;text-decoration:none;padding:4px 6px}
+.gr-item a:hover{color:var(--tx)}
+.conn-hero{text-align:center;padding:40px 0 20px}
+.conn-hero .lb{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mu);margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:6px}
+.conn-hero h1{font-family:'Space Grotesk',sans-serif;font-size:1.9rem;font-weight:700;margin-bottom:10px}
+.conn-hero p{color:var(--mu);font-size:13px;max-width:400px;margin:0 auto 28px;line-height:1.5}
+.conn-in{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:480px;margin:0 auto 14px}
+@media(max-width:500px){.conn-in{grid-template-columns:1fr}}
+.fld label{display:block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);margin-bottom:5px}
+.fld input{width:100%;background:var(--s1);border:1px solid var(--bd);border-radius:9px;padding:11px 13px;color:var(--tx);font-size:13px;outline:none}
+.fld input:focus{border-color:#3a3a3a}
+.conn-btn{max-width:480px;margin:0 auto;width:100%;display:block}
+.tree{margin:28px auto 0;max-width:420px}
+.tree-hd{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:16px;padding:0 4px}
+.tree-hd .deg{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700}
+.tree-hd .deg-l{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mu);margin-left:8px}
+.tree-hd .mut{font-size:11px;color:var(--mu2)}
+.tree-path{display:flex;flex-direction:column;align-items:center;gap:0}
+.t-node{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:12px;min-width:200px;cursor:pointer;transition:.15s}
+.t-node:hover{border-color:#444}
+.t-node img{width:36px;height:36px;border-radius:50%;object-fit:cover;background:#222}
+.t-node .tn{font-size:13px;font-weight:600}
+.t-node .tid{font-size:10px;color:var(--mu2);font-family:'JetBrains Mono',monospace}
+.t-arrow{width:2px;height:28px;background:var(--bd2);position:relative;margin:2px 0}
+.t-arrow::after{content:'↓';position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);font-size:12px;color:var(--mu2)}
+.my-hero{padding:40px 0}
+.my-hero .lb{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mu);margin-bottom:8px}
+.my-hero h1{font-family:'Space Grotesk',sans-serif;font-size:1.9rem;font-weight:700;margin-bottom:22px}
+.link-c{background:var(--s1);border:1px solid var(--bd);border-radius:14px;padding:22px;max-width:520px}
+.link-c .t{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);margin-bottom:12px}
+.link-r{display:flex;gap:8px}
+.link-r input{flex:1;background:var(--bg);border:1px solid var(--bd);border-radius:9px;padding:11px 13px;color:var(--tx);font-size:13px;outline:none}
+.link-n{margin-top:10px;font-size:12px;color:var(--mu2);line-height:1.4}
+footer{border-top:1px solid var(--bd);padding:14px 24px;display:flex;justify-content:space-between;font-size:10px;color:var(--mu2);letter-spacing:.04em;text-transform:uppercase}
+</style>
 </head>
 <body>
-  <div class="config-bar" id="configBar">
-    <span>Worker URL (для обхода CORS):</span>
-    <input id="workerUrl" type="text" placeholder="https://твой-worker.твой-subdomain.workers.dev" />
-    <button onclick="saveWorker()">Сохранить</button>
-    <button onclick="document.getElementById('configBar').style.display='none'">Скрыть</button>
+<header>
+  <a class="logo" onclick="goHome()">
+    <div class="logo-i">◎</div>
+    ROBLOX INTEL // TYPE-01
+  </a>
+  <nav>
+    <button id="t-lookup" class="on" onclick="tab('lookup')">Lookup</button>
+    <button id="t-connection" onclick="tab('connection')">Connection</button>
+    <button id="t-myroblox" onclick="tab('myroblox')">My Roblox</button>
+  </nav>
+  <div class="hdr-r">
+    <button onclick="showHistory()">↻ History</button>
+    <button onclick="clearAll()">✕ Clear</button>
   </div>
-
-  <header>
-    <a class="logo" href="#" onclick="showTab('lookup'); return false;">
-      <div class="logo-icon">◎</div>
-      ROBLOX INTEL // TYPE-01
-    </a>
-    <nav>
-      <button id="tab-lookup" class="active" onclick="showTab('lookup')">Lookup</button>
-      <button id="tab-connection" onclick="showTab('connection')">Connection</button>
-      <button id="tab-myroblox" onclick="showTab('myroblox')">My Roblox</button>
-    </nav>
-  </header>
-
-  <main>
-    <!-- LOOKUP -->
-    <div id="panel-lookup" class="panel active">
-      <div class="hero" id="lookupHero">
-        <div class="hero-icon">◎</div>
-        <h1>PLAYER DOSSIER<br>LOOKUP</h1>
-        <p>Enter Roblox User ID or Username to pull full<br>telemetry</p>
-        <div class="search-row">
-          <div class="search-wrap">
-            <span class="icon">⌕</span>
-            <input id="scanInput" type="text" placeholder="e.g. 1 or Roblox" autocomplete="off" />
-          </div>
-          <button class="btn btn-primary" id="scanBtn" onclick="doScan()">
-            <span>◎</span> SCAN
-          </button>
-        </div>
-        <div class="hint">
-          <span class="kbd">CTRL</span> + <span class="kbd">K</span> to focus search
-        </div>
-        <div class="status-msg" id="statusMsg"></div>
+</header>
+<main>
+<div id="p-lookup" class="panel on">
+  <div class="hero" id="hero">
+    <div class="hero-i">◎</div>
+    <h1>PLAYER DOSSIER<br>LOOKUP</h1>
+    <p>Enter Roblox User ID or Username to pull full<br>telemetry</p>
+    <div class="srch">
+      <div class="srch-w">
+        <span class="ic">⌕</span>
+        <input id="q" type="text" placeholder="e.g. 1 or Roblox" autocomplete="off"/>
       </div>
-      <div id="results"></div>
+      <button class="btn" id="scanBtn" onclick="scan()">◎ SCAN</button>
     </div>
-
-    <!-- CONNECTION -->
-    <div id="panel-connection" class="panel">
-      <div class="conn-hero">
-        <div class="label">⇄ DEGREES OF SEPARATION</div>
-        <h1>Friend Connection Tracer</h1>
-        <p>Enter two Roblox User IDs to find the shortest friend path between them — up to 3 degrees.</p>
-        <div class="conn-inputs">
-          <div class="field">
-            <label>Your User ID</label>
-            <input id="connFrom" type="text" placeholder="e.g. 16" />
-          </div>
-          <div class="field">
-            <label>Target User ID</label>
-            <input id="connTo" type="text" placeholder="e.g. 1" />
-          </div>
-        </div>
-        <button class="btn-full" onclick="doTrace()">⇄ TRACE CONNECTION</button>
-        <div class="status-msg" id="connStatus"></div>
-        <div id="connResult" style="margin-top:24px;"></div>
+    <div class="hint"><span class="kbd">CTRL</span> + <span class="kbd">K</span> to focus search</div>
+    <div class="st" id="st"></div>
+  </div>
+  <div class="dossier" id="dossier"></div>
+</div>
+<div id="p-connection" class="panel">
+  <div class="conn-hero">
+    <div class="lb">⇄ Degrees of Separation</div>
+    <h1>Friend Connection Tracer</h1>
+    <p>Enter two Roblox User IDs to find the shortest friend path between them — up to 3 degrees.</p>
+    <div class="conn-in">
+      <div class="fld"><label>Your User ID</label><input id="cFrom" type="text" placeholder="e.g. 16"/></div>
+      <div class="fld"><label>Target User ID</label><input id="cTo" type="text" placeholder="e.g. 1"/></div>
+    </div>
+    <button class="btn btn-w conn-btn" onclick="trace()">⇄ TRACE CONNECTION</button>
+    <div class="st" id="cSt"></div>
+    <div id="cRes"></div>
+  </div>
+</div>
+<div id="p-myroblox" class="panel">
+  <div class="my-hero">
+    <div class="lb">🔒 Self Control Panel</div>
+    <h1>My Roblox</h1>
+    <div class="link-c">
+      <div class="t">Link your Roblox User ID</div>
+      <div class="link-r">
+        <input id="myId" type="text" placeholder="Your Roblox User ID"/>
+        <button class="btn" onclick="linkMe()">🔗 LINK</button>
       </div>
+      <div class="link-n">Live read-only monitoring. Profile editing & friend management unlock once your Roblox session cookie is linked.</div>
+      <div class="st" id="mySt"></div>
     </div>
-
-    <!-- MY ROBLOX -->
-    <div id="panel-myroblox" class="panel">
-      <div class="my-hero">
-        <div class="label">🔒 SELF CONTROL PANEL</div>
-        <h1>My Roblox</h1>
-        <div class="link-card">
-          <div class="title">Link your Roblox User ID</div>
-          <div class="link-row">
-            <input id="myIdInput" type="text" placeholder="Your Roblox User ID" />
-            <button class="btn btn-primary" onclick="linkMyId()">🔗 LINK</button>
-          </div>
-          <div class="link-note">
-            Live read-only monitoring. Profile editing &amp; friend management unlock once your Roblox session cookie is linked.
-          </div>
-          <div class="status-msg" id="myStatus"></div>
-          <div id="myResult" style="margin-top:20px;"></div>
-        </div>
+  </div>
+</div>
+</main>
+<footer>
+  <span>ROBLOX INTEL // TYPE-01</span>
+  <span>UNOFFICIAL · DATA VIA ROBLOX API</span>
+</footer>
+<script>
+const W='https://delicate-band-b5fd.lvlyvcbcla.workers.dev';
+let liveTimer=null,liveSec=0,curUser=null,hist=JSON.parse(localStorage.getItem('rbx_hist')||'[]');
+async function F(url,opt={}){
+  const t=encodeURIComponent(url);
+  const r=await fetch(W+'/?url='+t,{method:opt.method||'GET',headers:opt.headers||{},body:opt.body||undefined});
+  return r;
+}
+function tab(n){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('on'));
+  document.getElementById('p-'+n).classList.add('on');
+  document.getElementById('t-'+n).classList.add('on');
+}
+function goHome(){tab('lookup');document.getElementById('hero').style.display='block';document.getElementById('dossier').style.display='none';document.getElementById('dossier').innerHTML='';document.getElementById('st').textContent='';if(liveTimer){clearInterval(liveTimer);liveTimer=null}}
+function clearAll(){goHome();document.getElementById('q').value='';hist=[];localStorage.setItem('rbx_hist','[]')}
+function showHistory(){
+  if(!hist.length){alert('History empty');return}
+  const s=hist.map((h,i)=>`${i+1}. ${h.name||h.id} (${h.id})`).join('\n');
+  const pick=prompt('History:\n'+s+'\n\nEnter number to rescan:');
+  if(pick&&hist[+pick-1]){document.getElementById('q').value=hist[+pick-1].id;scan()}
+}
+document.addEventListener('keydown',e=>{
+  if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();document.getElementById('q').focus()}
+  if(e.key==='Enter'&&document.activeElement?.id==='q')scan();
+});
+function pLabel(t){
+  return {0:{t:'Offline',c:'off'},1:{t:'Online — Browsing',c:'on'},2:{t:'In Experience',c:'game'},3:{t:'In Studio',c:'studio'},4:{t:'Invisible',c:'off'}}[t]||{t:'Offline',c:'off'};
+}
+function fmt(n){if(n==null)return'—';return n.toLocaleString()}
+function fDate(iso){if(!iso)return'—';try{return new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}catch{return iso}}
+async function scan(){
+  const idn=document.getElementById('q').value.trim();
+  const st=document.getElementById('st');
+  const btn=document.getElementById('scanBtn');
+  if(!idn){st.className='st err';st.textContent='Identifier required';return}
+  btn.disabled=true;st.className='st';st.innerHTML='<span class="sp"></span>Scanning…';
+  document.getElementById('dossier').style.display='none';
+  if(liveTimer){clearInterval(liveTimer);liveTimer=null}
+  try{
+    let userId;
+    if(/^\d+$/.test(idn))userId=idn;
+    else{
+      const rr=await F('https://users.roblox.com/v1/usernames/users',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({usernames:[idn],excludeBannedUsers:false})});
+      if(!rr.ok)throw new Error('Failed to resolve username');
+      const rd=await rr.json();
+      if(!rd.data||!rd.data.length)throw new Error('User not found');
+      userId=String(rd.data[0].id);
+    }
+    const ur=await F('https://users.roblox.com/v1/users/'+userId);
+    if(!ur.ok)throw new Error('User not found');
+    const user=await ur.json();
+    const [hs,fr,fo,fw,bd,pr,av,pm]=await Promise.allSettled([
+      F(`https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${userId}&size=420x420&format=Png&isCircular=false`).then(r=>r.json()),
+      F(`https://friends.roblox.com/v1/users/${userId}/friends/count`).then(r=>r.json()),
+      F(`https://friends.roblox.com/v1/users/${userId}/followers/count`).then(r=>r.json()),
+      F(`https://friends.roblox.com/v1/users/${userId}/followings/count`).then(r=>r.json()),
+      F(`https://badges.roblox.com/v1/users/${userId}/badges?limit=25&sortOrder=Desc`).then(r=>r.json()),
+      F('https://presence.roblox.com/v1/presence/users',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userIds:[+userId]})}).then(r=>r.json()),
+      F(`https://thumbnails.roblox.com/v1/users/avatar?userIds=${userId}&size=720x720&format=Png&isCircular=false`).then(r=>r.json()),
+      F(`https://premiumfeatures.roblox.com/v1/users/${userId}/validate-membership`).then(r=>r.ok?r.json():null).catch(()=>null)
+    ]);
+    const headshot=hs.status==='fulfilled'?hs.value?.data?.[0]?.imageUrl:null;
+    const avatar=av.status==='fulfilled'?av.value?.data?.[0]?.imageUrl:null;
+    const friends=fr.status==='fulfilled'?fr.value?.count:null;
+    const followers=fo.status==='fulfilled'?fo.value?.count:null;
+    const following=fw.status==='fulfilled'?fw.value?.count:null;
+    const badges=bd.status==='fulfilled'?(bd.value?.data||[]):[];
+    const presence=pr.status==='fulfilled'?pr.value?.userPresences?.[0]:null;
+    const isPrem=pm.status==='fulfilled'&&pm.value&&pm.value.subscription!=null;
+    let gameInfo=null;
+    if(presence?.userPresenceType===2&&presence?.universeId){
+      try{
+        const gr=await F(`https://games.roblox.com/v1/games?universeIds=${presence.universeId}`);
+        if(gr.ok){const gd=await gr.json();gameInfo=gd.data?.[0]||null}
+      }catch{}
+    }
+    curUser={user,headshot,avatar,friends,followers,following,badges,presence,gameInfo,isPrem,userId};
+    hist=hist.filter(h=>h.id!==userId);
+    hist.unshift({id:userId,name:user.name,display:user.displayName});
+    if(hist.length>20)hist=hist.slice(0,20);
+    localStorage.setItem('rbx_hist',JSON.stringify(hist));
+    render(curUser);
+    st.textContent='';
+    document.getElementById('hero').style.display='none';
+    document.getElementById('dossier').style.display='block';
+    startLive(userId);
+  }catch(e){
+    console.error(e);
+    st.className='st err';
+    st.textContent=(e.message||'Scan failed')+(String(e.message).includes('fetch')?' — check Worker':'');
+  }finally{btn.disabled=false}
+}
+function startLive(uid){
+  liveSec=0;
+  if(liveTimer)clearInterval(liveTimer);
+  liveTimer=setInterval(async()=>{
+    liveSec+=25;
+    const el=document.getElementById('liveSec');
+    if(el)el.textContent=liveSec+'S';
+    try{
+      const pr=await F('https://presence.roblox.com/v1/presence/users',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userIds:[+uid]})});
+      if(!pr.ok)return;
+      const pd=await pr.json();
+      const p=pd.userPresences?.[0];
+      if(!p)return;
+      let gameInfo=null;
+      if(p.userPresenceType===2&&p.universeId){
+        try{const gr=await F(`https://games.roblox.com/v1/games?universeIds=${p.universeId}`);if(gr.ok){const gd=await gr.json();gameInfo=gd.data?.[0]||null}}catch{}
+      }
+      const pl=pLabel(p.userPresenceType);
+      let txt=pl.t;
+      if(gameInfo)txt='In Experience — '+gameInfo.name;
+      else if(p.lastLocation&&p.userPresenceType===2)txt='In Experience — '+p.lastLocation;
+      const act=document.getElementById('actLine');
+      if(act)act.innerHTML=`<span class="dot ${pl.c}"></span>${txt}`;
+      const stBadge=document.getElementById('stBadge');
+      if(stBadge){
+        if(p.userPresenceType===0||p.userPresenceType===4){stBadge.className='badge-off';stBadge.textContent='OFFLINE'}
+        else{stBadge.className='badge-on';stBadge.textContent=(p.userPresenceType===2?'IN GAME':p.userPresenceType===3?'STUDIO':'ONLINE')}
+      }
+    }catch{}
+  },25000);
+}
+function render(d){
+  const{user,avatar,headshot,friends,followers,following,badges,presence,gameInfo,isPrem,userId}=d;
+  const pl=pLabel(presence?.userPresenceType??0);
+  let actTxt=pl.t;
+  if(gameInfo)actTxt='In Experience — '+gameInfo.name;
+  else if(presence?.lastLocation&&presence?.userPresenceType===2)actTxt='In Experience — '+presence.lastLocation;
+  let stBadge=presence?.userPresenceType>0&&presence?.userPresenceType!==4
+    ?`<span class="badge-on" id="stBadge">${presence.userPresenceType===2?'IN GAME':presence.userPresenceType===3?'STUDIO':'ONLINE'}</span>`
+    :`<span class="badge-off" id="stBadge">OFFLINE</span>`;
+  const bgHtml=badges.length
+    ?badges.slice(0,24).map(b=>`<div class="bg-item" title="${(b.name||'').replace(/"/g,'')}"><img src="https://thumbnails.roblox.com/v1/assets?assetIds=${b.iconImageId}&size=150x150&format=Png" onerror="this.parentNode.style.opacity='.3'"/></div>`).join('')
+    :'<div style="color:var(--mu2);font-size:13px">No badges found.</div>';
+  document.getElementById('dossier').innerHTML=`
+<div class="sub-label">Subject</div>
+<div class="sub-name">${user.displayName||user.name}</div>
+<div class="grid-top">
+  <div class="av-card"><img src="${avatar||headshot||''}" alt="" onerror="this.style.opacity='.3'"/></div>
+  <div class="r-col">
+    <div class="card">
+      <div class="card-h">
+        <div class="card-t">● Real-time Activity</div>
+        <div class="live">LIVE · <span id="liveSec">0S</span></div>
       </div>
+      <div class="act-line" id="actLine"><span class="dot ${pl.c}"></span>${actTxt}</div>
     </div>
-  </main>
-
-  <footer>
-    <span>ROBLOX INTEL // TYPE-01</span>
-    <span>UNOFFICIAL · DATA VIA ROBLOX API</span>
-  </footer>
-
-  <script>
-    // ============ CONFIG ============
-    // Твой Cloudflare Worker (уже вшит)
-    const DEFAULT_WORKER = 'https://delicate-band-b5fd.lvlyvcbcla.workers.dev';
-    let WORKER_URL = localStorage.getItem('rbx_worker_url') || DEFAULT_WORKER;
-
-    document.getElementById('workerUrl').value = WORKER_URL;
-
-    function saveWorker() {
-      WORKER_URL = document.getElementById('workerUrl').value.trim().replace(/\/$/, '');
-      localStorage.setItem('rbx_worker_url', WORKER_URL);
-      alert(WORKER_URL ? 'Worker URL сохранён' : 'Worker URL очищен (будет прямой запрос)');
+    <div class="stats4">
+      <div class="stat-c"><div class="l">👥 Friends</div><div class="v">${fmt(friends)}</div></div>
+      <div class="stat-c"><div class="l">⊕ Followers</div><div class="v">${fmt(followers)}</div></div>
+      <div class="stat-c"><div class="l">↗ Following</div><div class="v">${fmt(following)}</div></div>
+      <div class="stat-c"><div class="l">🏅 Badges</div><div class="v">${fmt(badges.length)}</div></div>
+    </div>
+  </div>
+</div>
+<div class="grid-mid">
+  <div class="info-card">
+    <div class="info-row"><span class="k">Status</span>${stBadge}</div>
+    <div class="info-row"><span class="k">User ID</span><span class="v">${user.id}</span></div>
+    <div class="info-row"><span class="k">Joined</span><span class="v">${fDate(user.created)}</span></div>
+    <a class="btn-prof" href="https://www.roblox.com/users/${user.id}/profile" target="_blank" rel="noopener">↗ Open Profile</a>
+  </div>
+  <div>
+    <div class="flags">
+      <div class="flag"><div class="ic">👑</div><div class="l">Premium</div><div class="v">${isPrem?'Active':'Inactive'}</div></div>
+      <div class="flag"><div class="ic">🛡</div><div class="l">Verified</div><div class="v">${user.hasVerifiedBadge?'Yes':'Unverified'}</div></div>
+      <div class="flag"><div class="ic">ℹ</div><div class="l">Account</div><div class="v">${user.isBanned?'Banned':'Active'}</div></div>
+    </div>
+    <div class="badges-sec">
+      <div class="hd"><span class="t">Recent Badges</span><span class="c">${badges.length} entries</span></div>
+      <div class="bg-grid">${bgHtml}</div>
+    </div>
+  </div>
+</div>
+<div class="bot-row">
+  <div class="load-card" id="frCard">
+    <div class="hd">👥 Friends Network <span id="frCnt"></span></div>
+    <button class="load-btn" id="frBtn" onclick="loadFriends('${userId}')">LOAD FRIENDS LIST</button>
+    <div class="friends-box" id="frBox"></div>
+  </div>
+  <div class="load-card" id="grCard">
+    <div class="hd">🏛 Groups <span id="grCnt"></span></div>
+    <button class="load-btn" id="grBtn" onclick="loadGroups('${userId}')">LOAD GROUPS</button>
+    <div class="groups-box" id="grBox"></div>
+  </div>
+</div>`;
+}
+async function loadFriends(uid){
+  const btn=document.getElementById('frBtn');
+  const box=document.getElementById('frBox');
+  btn.disabled=true;btn.textContent='Loading…';
+  try{
+    const r=await F(`https://friends.roblox.com/v1/users/${uid}/friends`);
+    if(!r.ok)throw new Error('Failed');
+    const d=await r.json();
+    const list=d.data||[];
+    document.getElementById('frCnt').textContent=list.length;
+    if(!list.length){box.innerHTML='<div style="color:var(--mu2);font-size:13px;padding:8px 0">No friends</div>';box.style.display='block';btn.style.display='none';return}
+    const ids=list.slice(0,100).map(f=>f.id).join(',');
+    let thumbs={};
+    try{
+      const tr=await F(`https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${ids}&size=150x150&format=Png&isCircular=true`);
+      if(tr.ok){const td=await tr.json();(td.data||[]).forEach(t=>{thumbs[t.targetId]=t.imageUrl})}
+    }catch{}
+    box.innerHTML=`
+<div class="fr-wrap"><span class="fic">⌕</span>
+<input class="filter-in" id="frFilter" placeholder="Filter friends…" oninput="filterFr()"/>
+</div>
+<div class="fr-grid" id="frGrid">
+${list.map(f=>`
+<div class="fr-item" data-name="${(f.name||'').toLowerCase()} ${(f.displayName||'').toLowerCase()}" onclick="document.getElementById('q').value='${f.id}';scan()">
+<img src="${thumbs[f.id]||''}" onerror="this.style.background='#222'"/>
+<div class="nm">${f.displayName||f.name}</div>
+<div class="id">${f.id}</div>
+</div>`).join('')}
+</div>`;
+    box.style.display='block';
+    btn.style.display='none';
+  }catch(e){btn.textContent='Retry';btn.disabled=false;alert('Failed to load friends')}
+}
+function filterFr(){
+  const q=(document.getElementById('frFilter')?.value||'').toLowerCase();
+  document.querySelectorAll('#frGrid .fr-item').forEach(el=>{
+    el.style.display=el.dataset.name.includes(q)?'':'none';
+  });
+}
+async function loadGroups(uid){
+  const btn=document.getElementById('grBtn');
+  const box=document.getElementById('grBox');
+  btn.disabled=true;btn.textContent='Loading…';
+  try{
+    const r=await F(`https://groups.roblox.com/v1/users/${uid}/groups/roles`);
+    if(!r.ok)throw new Error('Failed');
+    const d=await r.json();
+    const list=d.data||[];
+    document.getElementById('grCnt').textContent=list.length;
+    if(!list.length){box.innerHTML='<div style="color:var(--mu2);font-size:13px;padding:8px 0">No groups</div>';box.style.display='block';btn.style.display='none';return}
+    box.innerHTML=`<div class="gr-list">${list.map(g=>{
+      const gr=g.group||{};
+      const role=g.role||{};
+      return `<div class="gr-item">
+<div class="gi"><div class="gn">${gr.name||'?'}</div><div class="gr">${role.name||'Member'} · ${(gr.memberCount||0).toLocaleString()} members</div></div>
+<a href="https://www.roblox.com/groups/${gr.id}" target="_blank" rel="noopener">↗</a>
+</div>`}).join('')}</div>`;
+    box.style.display='block';
+    btn.style.display='none';
+  }catch(e){btn.textContent='Retry';btn.disabled=false;alert('Failed to load groups')}
+}
+async function getFriends(uid){
+  const r=await F(`https://friends.roblox.com/v1/users/${uid}/friends`);
+  if(!r.ok)return[];
+  const d=await r.json();
+  return d.data||[];
+}
+async function getHead(uid){
+  try{
+    const r=await F(`https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${uid}&size=150x150&format=Png&isCircular=true`);
+    if(!r.ok)return null;
+    const d=await r.json();
+    return d.data?.[0]?.imageUrl||null;
+  }catch{return null}
+}
+async function getName(uid){
+  try{
+    const r=await F(`https://users.roblox.com/v1/users/${uid}`);
+    if(!r.ok)return{id:uid,name:String(uid)};
+    const d=await r.json();
+    return{id:d.id,name:d.name,displayName:d.displayName};
+  }catch{return{id:uid,name:String(uid)}}
+}
+async function trace(){
+  const from=document.getElementById('cFrom').value.trim();
+  const to=document.getElementById('cTo').value.trim();
+  const st=document.getElementById('cSt');
+  const res=document.getElementById('cRes');
+  if(!/^\d+$/.test(from)||!/^\d+$/.test(to)){st.className='st err';st.textContent='Both IDs must be numeric';return}
+  if(from===to){st.className='st';st.textContent='Same user — 0 degrees';res.innerHTML='';return}
+  st.className='st';st.innerHTML='<span class="sp"></span>Tracing path (up to 3 degrees)…';
+  res.innerHTML='';
+  try{
+    const fromInfo=await getName(from);
+    const toInfo=await getName(to);
+    const fromHead=await getHead(from);
+    const toHead=await getHead(to);
+    const f1=await getFriends(from);
+    const direct=f1.find(f=>String(f.id)===to);
+    if(direct){
+      st.textContent='';
+      res.innerHTML=treeHtml(1,[{...fromInfo,head:fromHead},{id:to,name:direct.name,displayName:direct.displayName,head:toHead}],0);
+      return;
     }
-
-    // ============ HELPERS ============
-    async function apiFetch(url, options = {}) {
-      if (WORKER_URL) {
-        // Через Cloudflare Worker
-        const target = encodeURIComponent(url);
-        const res = await fetch(`${WORKER_URL}/?url=${target}`, {
-          method: options.method || 'GET',
-          headers: options.headers || {},
-          body: options.body || undefined
-        });
-        return res;
+    st.innerHTML='<span class="sp"></span>Checking 2nd degree…';
+    const f1ids=new Set(f1.map(f=>String(f.id)));
+    let found2=null;
+    const batch=f1.slice(0,40);
+    for(const fr of batch){
+      const ff=await getFriends(fr.id);
+      const hit=ff.find(x=>String(x.id)===to);
+      if(hit){
+        const midHead=await getHead(fr.id);
+        found2=[{...fromInfo,head:fromHead},{id:fr.id,name:fr.name,displayName:fr.displayName,head:midHead},{id:to,name:hit.name||toInfo.name,displayName:hit.displayName||toInfo.displayName,head:toHead}];
+        break;
       }
-      // Прямой запрос (часто блокируется CORS)
-      return fetch(url, options);
     }
-
-    function showTab(name) {
-      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-      document.getElementById('panel-' + name).classList.add('active');
-      document.getElementById('tab-' + name).classList.add('active');
+    if(found2){
+      st.textContent='';
+      res.innerHTML=treeHtml(2,found2,1);
+      return;
     }
-
-    // Ctrl+K focus
-    document.addEventListener('keydown', e => {
-      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-        e.preventDefault();
-        document.getElementById('scanInput').focus();
-      }
-      if (e.key === 'Enter' && document.activeElement?.id === 'scanInput') {
-        doScan();
-      }
-    });
-
-    function presenceLabel(type) {
-      // 0 Offline, 1 Online, 2 InGame, 3 InStudio, 4 Invisible
-      const map = {
-        0: { text: 'Offline', cls: 'offline' },
-        1: { text: 'Online', cls: 'online' },
-        2: { text: 'In Experience', cls: 'ingame' },
-        3: { text: 'In Studio', cls: 'studio' },
-        4: { text: 'Invisible', cls: 'offline' }
-      };
-      return map[type] || map[0];
-    }
-
-    function formatDate(iso) {
-      if (!iso) return '—';
-      try {
-        return new Date(iso).toLocaleDateString('en-GB', {
-          day: 'numeric', month: 'short', year: 'numeric'
-        });
-      } catch { return iso; }
-    }
-
-    // ============ SCAN (тот же flow что у тебя) ============
-    async function doScan() {
-      const identifier = document.getElementById('scanInput').value.trim();
-      const status = document.getElementById('statusMsg');
-      const results = document.getElementById('results');
-      const btn = document.getElementById('scanBtn');
-
-      if (!identifier) {
-        status.className = 'status-msg error';
-        status.textContent = 'Identifier required';
-        return;
-      }
-
-      btn.disabled = true;
-      status.className = 'status-msg';
-      status.innerHTML = '<span class="spinner"></span> Scanning…';
-      results.style.display = 'none';
-      results.innerHTML = '';
-
-      try {
-        let userId;
-
-        if (/^\d+$/.test(identifier)) {
-          userId = identifier;
-        } else {
-          const resolveRes = await apiFetch('https://users.roblox.com/v1/usernames/users', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ usernames: [identifier], excludeBannedUsers: false })
-          });
-          if (!resolveRes.ok) throw new Error('Failed to resolve username');
-          const resolveData = await resolveRes.json();
-          if (!resolveData.data || resolveData.data.length === 0) throw new Error('User not found');
-          userId = String(resolveData.data[0].id);
+    st.innerHTML='<span class="sp"></span>Checking 3rd degree (limited sample)…';
+    let found3=null;
+    const sample=batch.slice(0,12);
+    outer: for(const fr of sample){
+      const ff=await getFriends(fr.id);
+      const mid2sample=ff.slice(0,15);
+      for(const m2 of mid2sample){
+        if(f1ids.has(String(m2.id))||String(m2.id)===from)continue;
+        const f3=await getFriends(m2.id);
+        const hit=f3.find(x=>String(x.id)===to);
+        if(hit){
+          const h1=await getHead(fr.id);
+          const h2=await getHead(m2.id);
+          found3=[
+            {...fromInfo,head:fromHead},
+            {id:fr.id,name:fr.name,displayName:fr.displayName,head:h1},
+            {id:m2.id,name:m2.name,displayName:m2.displayName,head:h2},
+            {id:to,name:hit.name||toInfo.name,displayName:hit.displayName||toInfo.displayName,head:toHead}
+          ];
+          break outer;
         }
-
-        const userRes = await apiFetch(`https://users.roblox.com/v1/users/${userId}`);
-        if (!userRes.ok) throw new Error('User not found');
-        const userInfo = await userRes.json();
-
-        const [headshotRes, friendsRes, followersRes, followingRes, badgesRes, presenceRes, thumbFullRes, premiumRes] =
-          await Promise.allSettled([
-            apiFetch(`https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${userId}&size=420x420&format=Png&isCircular=false`).then(r => r.json()),
-            apiFetch(`https://friends.roblox.com/v1/users/${userId}/friends/count`).then(r => r.json()),
-            apiFetch(`https://friends.roblox.com/v1/users/${userId}/followers/count`).then(r => r.json()),
-            apiFetch(`https://friends.roblox.com/v1/users/${userId}/followings/count`).then(r => r.json()),
-            apiFetch(`https://badges.roblox.com/v1/users/${userId}/badges?limit=25&sortOrder=Desc`).then(r => r.json()),
-            apiFetch('https://presence.roblox.com/v1/presence/users', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ userIds: [parseInt(userId)] })
-            }).then(r => r.json()),
-            apiFetch(`https://thumbnails.roblox.com/v1/users/avatar?userIds=${userId}&size=420x420&format=Png&isCircular=false`).then(r => r.json()),
-            apiFetch(`https://premiumfeatures.roblox.com/v1/users/${userId}/validate-membership`).then(r => (r.ok ? r.json() : null)).catch(() => null)
-          ]);
-
-        const headshot = headshotRes.status === 'fulfilled' ? headshotRes.value?.data?.[0]?.imageUrl : null;
-        const avatarFull = thumbFullRes.status === 'fulfilled' ? thumbFullRes.value?.data?.[0]?.imageUrl : null;
-        const friends = friendsRes.status === 'fulfilled' ? friendsRes.value?.count : null;
-        const followers = followersRes.status === 'fulfilled' ? followersRes.value?.count : null;
-        const following = followingRes.status === 'fulfilled' ? followingRes.value?.count : null;
-        const badges = badgesRes.status === 'fulfilled' ? (badgesRes.value?.data || []) : [];
-        const presence = presenceRes.status === 'fulfilled' ? presenceRes.value?.userPresences?.[0] : null;
-        const isPremium = premiumRes.status === 'fulfilled' && premiumRes.value && premiumRes.value.subscription != null;
-
-        let gameInfo = null;
-        if (presence?.userPresenceType === 2 && presence?.universeId) {
-          try {
-            const gameRes = await apiFetch(`https://games.roblox.com/v1/games?universeIds=${presence.universeId}`);
-            if (gameRes.ok) {
-              const gameData = await gameRes.json();
-              gameInfo = gameData.data?.[0] || null;
-            }
-          } catch {}
-        }
-
-        renderDossier({
-          user: userInfo,
-          headshot,
-          avatarFull,
-          friends,
-          followers,
-          following,
-          badges,
-          presence,
-          gameInfo,
-          isPremium
-        });
-
-        status.textContent = '';
-        results.style.display = 'block';
-        document.getElementById('lookupHero').style.display = 'none';
-      } catch (err) {
-        console.error(err);
-        status.className = 'status-msg error';
-        let msg = err.message || 'Scan failed';
-        if (msg.includes('Failed to fetch') || msg.includes('NetworkError') || msg.includes('CORS')) {
-          msg = 'CORS blocked. Deploy Cloudflare Worker (см. инструкцию) и укажи Worker URL сверху.';
-        }
-        status.textContent = msg;
-      } finally {
-        btn.disabled = false;
       }
     }
-
-    function renderDossier(data) {
-      const { user, headshot, friends, followers, following, badges, presence, gameInfo, isPremium } = data;
-      const p = presenceLabel(presence?.userPresenceType ?? 0);
-
-      let presenceHtml = `
-        <div class="presence-box">
-          <div class="presence-dot ${p.cls}" style="position:static;width:12px;height:12px;border:none;"></div>
-          <div>
-            <div class="presence-status">${p.text}</div>
-            ${gameInfo ? `<div class="presence-detail">${gameInfo.name || 'Unknown experience'}</div>` : ''}
-            ${presence?.lastLocation && !gameInfo ? `<div class="presence-detail">${presence.lastLocation}</div>` : ''}
-          </div>
-        </div>`;
-
-      let badgesHtml = '';
-      if (badges.length) {
-        badgesHtml = `
-          <div class="section">
-            <div class="section-title">Recent Badges (${badges.length})</div>
-            <div class="badges-grid">
-              ${badges.slice(0, 20).map(b => `
-                <div class="badge-item" title="${b.name || ''}">
-                  <img src="https://thumbnails.roblox.com/v1/assets?assetIds=${b.iconImageId}&size=150x150&format=Png" 
-                       onerror="this.style.display='none'" alt="" />
-                </div>`).join('')}
-            </div>
-          </div>`;
-      }
-
-      document.getElementById('results').innerHTML = `
-        <div class="dossier">
-          <div class="dossier-top">
-            <div class="avatar-wrap">
-              <img src="${headshot || ''}" alt="avatar" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22120%22 height=%22120%22><rect fill=%22%23141%22 width=%22120%22 height=%22120%22/></svg>'" />
-              <div class="presence-dot ${p.cls}"></div>
-            </div>
-            <div class="user-meta">
-              <h2>
-                ${user.displayName || user.name}
-                ${isPremium ? '<span class="badge-tag premium">Premium</span>' : ''}
-                ${user.isBanned ? '<span class="badge-tag banned">Banned</span>' : ''}
-              </h2>
-              <div class="user-id">@${user.name} · ID ${user.id}</div>
-              <div class="user-desc">${user.description || 'No description'}</div>
-            </div>
-          </div>
-          <div class="stats-row">
-            <div class="stat">
-              <div class="stat-val">${friends ?? '—'}</div>
-              <div class="stat-label">Friends</div>
-            </div>
-            <div class="stat">
-              <div class="stat-val">${followers ?? '—'}</div>
-              <div class="stat-label">Followers</div>
-            </div>
-            <div class="stat">
-              <div class="stat-val">${following ?? '—'}</div>
-              <div class="stat-label">Following</div>
-            </div>
-          </div>
-          <div class="section">
-            <div class="section-title">Presence</div>
-            ${presenceHtml}
-          </div>
-          <div class="section">
-            <div class="section-title">Account</div>
-            <div class="created">Created ${formatDate(user.created)}</div>
-          </div>
-          ${badgesHtml}
-        </div>
-        <div style="text-align:center;margin-top:20px;">
-          <button class="btn btn-primary" onclick="resetScan()">← New Scan</button>
-        </div>`;
+    if(found3){
+      st.textContent='';
+      res.innerHTML=treeHtml(3,found3,1);
+      return;
     }
-
-    function resetScan() {
-      document.getElementById('results').style.display = 'none';
-      document.getElementById('results').innerHTML = '';
-      document.getElementById('lookupHero').style.display = 'block';
-      document.getElementById('statusMsg').textContent = '';
-      document.getElementById('scanInput').focus();
-    }
-
-    // ============ CONNECTION (упрощённо — 1 degree) ============
-    async function doTrace() {
-      const from = document.getElementById('connFrom').value.trim();
-      const to = document.getElementById('connTo').value.trim();
-      const status = document.getElementById('connStatus');
-      const result = document.getElementById('connResult');
-
-      if (!/^\d+$/.test(from) || !/^\d+$/.test(to)) {
-        status.className = 'status-msg error';
-        status.textContent = 'Both IDs must be numeric';
-        return;
-      }
-      if (from === to) {
-        status.className = 'status-msg';
-        status.textContent = 'Same user — 0 degrees';
-        return;
-      }
-
-      status.className = 'status-msg';
-      status.innerHTML = '<span class="spinner"></span> Tracing (1st degree only on client)…';
-      result.innerHTML = '';
-
-      try {
-        // Получаем друзей первого пользователя
-        const friendsRes = await apiFetch(`https://friends.roblox.com/v1/users/${from}/friends`);
-        if (!friendsRes.ok) throw new Error('Failed to fetch friends');
-        const friendsData = await friendsRes.json();
-        const friends = friendsData.data || [];
-
-        const direct = friends.find(f => String(f.id) === to);
-        if (direct) {
-          status.textContent = '';
-          result.innerHTML = `
-            <div class="dossier" style="padding:24px;text-align:center;">
-              <div style="font-size:13px;color:var(--muted);margin-bottom:8px;">1 DEGREE</div>
-              <div style="font-family:'Space Grotesk';font-size:1.3rem;font-weight:700;">
-                Direct friends
-              </div>
-              <div style="margin-top:12px;color:var(--muted);font-size:14px;">
-                ${from} ↔ ${to} (${direct.name || direct.displayName})
-              </div>
-            </div>`;
-        } else {
-          status.className = 'status-msg';
-          status.textContent = 'Not direct friends. Full 2–3 degree search requires Worker with recursion (rate limits).';
-          result.innerHTML = `<div style="color:var(--muted);font-size:13px;text-align:center;">Checked ${friends.length} friends of user ${from}.</div>`;
-        }
-      } catch (err) {
-        status.className = 'status-msg error';
-        status.textContent = err.message.includes('fetch') 
-          ? 'CORS blocked — нужен Cloudflare Worker' 
-          : err.message;
-      }
-    }
-
-    // ============ MY ROBLOX ============
-    function linkMyId() {
-      const id = document.getElementById('myIdInput').value.trim();
-      const status = document.getElementById('myStatus');
-      if (!/^\d+$/.test(id)) {
-        status.className = 'status-msg error';
-        status.textContent = 'Enter numeric User ID';
-        return;
-      }
-      localStorage.setItem('my_roblox_id', id);
-      status.className = 'status-msg';
-      status.textContent = 'Linked ID ' + id + '. Scanning…';
-      document.getElementById('scanInput').value = id;
-      showTab('lookup');
-      doScan();
-    }
-
-    // restore linked id
-    const savedId = localStorage.getItem('my_roblox_id');
-    if (savedId) document.getElementById('myIdInput').value = savedId;
-  </script>
+    st.className='st';
+    st.textContent='No path found within 3 degrees (sampled). Try closer users or wait — rate limits apply.';
+  }catch(e){
+    st.className='st err';
+    st.textContent=e.message||'Trace failed';
+  }
+}
+function treeHtml(deg,nodes,mutual){
+  const nodesHtml=nodes.map((n,i)=>{
+    const arrow=i<nodes.length-1?'<div class="t-arrow"></div>':'';
+    return `<div class="t-node" onclick="document.getElementById('q').value='${n.id}';tab('lookup');scan()">
+<img src="${n.head||''}" onerror="this.style.background='#333'"/>
+<div><div class="tn">${n.displayName||n.name||n.id}</div><div class="tid">${n.id}</div></div>
+</div>${arrow}`;
+  }).join('');
+  return `<div class="tree">
+<div class="tree-hd">
+<div><span class="deg">${deg}</span><span class="deg-l">Degrees of Separation</span></div>
+<div class="mut">${mutual?mutual+' mutual':''}</div>
+</div>
+<div class="tree-path">${nodesHtml}</div>
+</div>`;
+}
+function linkMe(){
+  const id=document.getElementById('myId').value.trim();
+  const st=document.getElementById('mySt');
+  if(!/^\d+$/.test(id)){st.className='st err';st.textContent='Enter numeric User ID';return}
+  localStorage.setItem('my_roblox_id',id);
+  st.className='st';st.textContent='Linked '+id;
+  document.getElementById('q').value=id;
+  document.getElementById('cFrom').value=id;
+  tab('lookup');
+  scan();
+}
+const saved=localStorage.getItem('my_roblox_id');
+if(saved){document.getElementById('myId').value=saved;document.getElementById('cFrom').value=saved}
+</script>
 </body>
 </html>
