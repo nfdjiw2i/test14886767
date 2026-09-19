@@ -60,7 +60,7 @@ main{flex:1;padding:28px 20px 60px;max-width:1100px;width:100%;margin:0 auto}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
 .act-line{font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px}
 .act-line .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.dot.on{background:var(--gn)}.dot.game{background:var(--bl)}.dot.off{background:#555}.dot.studio{background:var(--yl)}
+.dot.on{background:var(--gn)}.dot.game{background:var(--gn)}.dot.off{background:#555}.dot.studio{background:var(--yl)}
 .stats4{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .stat-c{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:14px 16px}
 .stat-c .l{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);margin-bottom:4px;display:flex;align-items:center;gap:5px}
@@ -145,6 +145,44 @@ main{flex:1;padding:28px 20px 60px;max-width:1100px;width:100%;margin:0 auto}
 .link-r input{flex:1;background:var(--bg);border:1px solid var(--bd);border-radius:9px;padding:11px 13px;color:var(--tx);font-size:13px;outline:none}
 .link-n{margin-top:10px;font-size:12px;color:var(--mu2);line-height:1.4}
 footer{border-top:1px solid var(--bd);padding:14px 24px;display:flex;justify-content:space-between;font-size:10px;color:var(--mu2);letter-spacing:.04em;text-transform:uppercase}
+
+.fav-card{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:14px 16px;margin-bottom:12px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.fav-card img{width:48px;height:48px;border-radius:10px;object-fit:cover;background:#222}
+.fav-card .fi{flex:1;min-width:120px}
+.fav-card .fn{font-weight:600;font-size:14px}
+.fav-card .fsub{font-size:11px;color:var(--mu);font-family:'JetBrains Mono',monospace;margin-top:2px}
+.fav-card .fbtns{display:flex;gap:6px;flex-wrap:wrap}
+.fav-card .fbtns button{font-size:11px;padding:7px 10px;border-radius:7px;border:1px solid var(--bd);background:var(--s2);color:var(--tx);cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:600}
+.fav-card .fbtns button:hover{background:var(--s3)}
+.fav-card .fbtns button.arch-on{border-color:var(--gn);color:var(--gn)}
+.arch-box{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-top:10px;max-height:280px;overflow-y:auto;width:100%}
+.arch-box .ah{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mu);margin-bottom:10px}
+.arch-row{display:flex;gap:12px;padding:6px 0;border-bottom:1px solid var(--bd);font-size:12px;font-family:'JetBrains Mono',monospace}
+.arch-row .t{color:var(--mu2);min-width:70px}
+.arch-row .g{color:var(--tx);flex:1}
+.btn-back{margin-bottom:16px;font-size:12px;padding:8px 14px;border-radius:8px;border:1px solid var(--bd);background:var(--s2);color:var(--mu);cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:600;display:inline-flex;align-items:center;gap:6px}
+.btn-back:hover{color:var(--tx);border-color:var(--bd2)}
+.sub-user{font-size:13px;color:var(--mu);font-family:'JetBrains Mono',monospace;margin-top:-12px;margin-bottom:18px}
+.btn-fav{font-size:11px;padding:6px 12px;border-radius:7px;border:1px solid var(--bd);background:var(--s2);color:var(--mu);cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:600;margin-left:8px}
+.btn-fav.on{border-color:#eab308;color:#eab308}
+.btn-fav:hover{border-color:#eab308;color:#eab308}
+
+
+.ic-bw{opacity:.55;filter:grayscale(1);font-size:16px;letter-spacing:0}
+@media(max-width:900px){.bot-row{grid-template-columns:1fr!important}}
+
+.mode-switch{display:flex;gap:6px;justify-content:center;margin-bottom:20px}
+.mode-switch button{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:8px 16px;border-radius:999px;border:1px solid var(--bd);background:transparent;color:var(--mu);cursor:pointer}
+.mode-switch button.on{background:#fff;color:#000;border-color:#fff}
+.d-tabs{display:flex;gap:4px;flex-wrap:wrap;margin:16px 0 12px;border-bottom:1px solid var(--bd);padding-bottom:0}
+.d-tabs button{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:10px 14px;border:none;background:transparent;color:var(--mu);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+.d-tabs button.on{color:var(--tx);border-bottom-color:#fff}
+.d-pane{display:none;padding:8px 0 16px}
+.d-pane.on{display:block}
+.place-hero{display:grid;grid-template-columns:160px 1fr;gap:20px;margin-bottom:16px}
+@media(max-width:600px){.place-hero{grid-template-columns:1fr}}
+.place-icon{width:100%;aspect-ratio:1;border-radius:14px;border:1px solid var(--bd);background:var(--s1);object-fit:cover}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:16px}
 </style>
 </head>
 <body>
@@ -156,6 +194,8 @@ footer{border-top:1px solid var(--bd);padding:14px 24px;display:flex;justify-con
   <nav>
     <button id="t-lookup" class="on" onclick="tab('lookup')">Lookup</button>
     <button id="t-connection" onclick="tab('connection')">Connection</button>
+    <button id="t-compare" onclick="tab('compare')">Compare</button>
+    <button id="t-favorites" onclick="tab('favorites')">Favorites</button>
     <button id="t-myroblox" onclick="tab('myroblox')">My Roblox</button>
   </nav>
   <div class="hdr-r">
@@ -167,14 +207,18 @@ footer{border-top:1px solid var(--bd);padding:14px 24px;display:flex;justify-con
 <div id="p-lookup" class="panel on">
   <div class="hero" id="hero">
     <div class="hero-i">◎</div>
-    <h1>PLAYER DOSSIER<br>LOOKUP</h1>
-    <p>Enter Roblox User ID or Username to pull full<br>telemetry</p>
+    <h1 id="heroTitle">PLAYER DOSSIER<br>LOOKUP</h1>
+    <p id="heroSub">Enter Roblox User ID or Username to pull full<br>telemetry</p>
+    <div class="mode-switch">
+      <button type="button" id="modePlayer" class="on" onclick="setMode('player')">Player</button>
+      <button type="button" id="modePlace" onclick="setMode('place')">Place</button>
+    </div>
     <div class="srch">
       <div class="srch-w">
         <span class="ic">⌕</span>
         <input id="q" type="text" placeholder="e.g. 1 or Roblox" autocomplete="off"/>
       </div>
-      <button class="btn" id="scanBtn" onclick="scan()">◎ SCAN</button>
+      <button class="btn" id="scanBtn" onclick="runSearch()">◎ SCAN</button>
     </div>
     <div class="hint"><span class="kbd">CTRL</span> + <span class="kbd">K</span> to focus search</div>
     <div class="st" id="st"></div>
@@ -193,6 +237,33 @@ footer{border-top:1px solid var(--bd);padding:14px 24px;display:flex;justify-con
     <button class="btn btn-w conn-btn" onclick="trace()">⇄ TRACE CONNECTION</button>
     <div class="st" id="cSt"></div>
     <div id="cRes"></div>
+  </div>
+</div>
+<div id="p-compare" class="panel">
+  <div class="conn-hero">
+    <div class="lb">Compare Dossiers</div>
+    <h1>Compare Two Users</h1>
+    <p>Find shared friends, groups and profile overlap between two accounts.</p>
+    <div class="conn-in">
+      <div class="fld"><label>User A (ID or name)</label><input id="cmpA" type="text" placeholder="e.g. 1"/></div>
+      <div class="fld"><label>User B (ID or name)</label><input id="cmpB" type="text" placeholder="e.g. 16"/></div>
+    </div>
+    <button class="btn btn-w conn-btn" onclick="doCompare()">COMPARE</button>
+    <div class="st" id="cmpSt"></div>
+    <div id="cmpRes" style="text-align:left;max-width:720px;margin:20px auto 0"></div>
+  </div>
+</div>
+<div id="p-favorites" class="panel">
+  <div class="my-hero">
+    <div class="lb">★ Saved Profiles</div>
+    <h1>Favorites</h1>
+    <p style="color:var(--mu);font-size:13px;margin-bottom:16px;max-width:520px">Saved players. Archive logs game sessions while recording is on. Data stays in this browser.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px">
+      <button class="btn" onclick="exportAllArchives('json')">Export Archives JSON</button>
+      <button class="btn" onclick="exportAllArchives('csv')">Export Archives CSV</button>
+      <button class="btn" onclick="requestNotifPerm()">Enable Notifications</button>
+    </div>
+    <div id="favList"></div>
   </div>
 </div>
 <div id="p-myroblox" class="panel">
@@ -217,7 +288,56 @@ footer{border-top:1px solid var(--bd);padding:14px 24px;display:flex;justify-con
 </footer>
 <script>
 const W='https://delicate-band-b5fd.lvlyvcbcla.workers.dev';
-let liveTimer=null,liveSec=0,curUser=null,hist=JSON.parse(localStorage.getItem('rbx_hist')||'[]');
+let searchMode='player';
+function setMode(m){
+  searchMode=m;
+  document.getElementById('modePlayer').classList.toggle('on',m==='player');
+  document.getElementById('modePlace').classList.toggle('on',m==='place');
+  const t=document.getElementById('heroTitle');
+  const s=document.getElementById('heroSub');
+  const q=document.getElementById('q');
+  if(m==='place'){
+    t.innerHTML='PLACE INTEL<br>LOOKUP';
+    s.innerHTML='Enter Place ID or game name to pull visits,<br>players, creator and more';
+    q.placeholder='e.g. 920587237 or Adopt Me';
+  }else{
+    t.innerHTML='PLAYER DOSSIER<br>LOOKUP';
+    s.innerHTML='Enter Roblox User ID or Username to pull full<br>telemetry';
+    q.placeholder='e.g. 1 or Roblox';
+  }
+}
+function runSearch(){
+  if(searchMode==='place')scanPlace();
+  else scan();
+}
+function dTab(btn,name){
+  document.querySelectorAll('.d-tabs button').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.d-pane').forEach(p=>p.classList.remove('on'));
+  btn.classList.add('on');
+  const pane=document.getElementById('pane-'+name);
+  if(pane)pane.classList.add('on');
+}
+
+let liveTimer=null,liveSec=0,curUser=null;
+let hist=[];
+const memStore={};
+function lsGet(k){
+  try{return localStorage.getItem(k)}catch(e){return memStore[k]||null}
+}
+function lsSet(k,v){
+  try{localStorage.setItem(k,v)}catch(e){memStore[k]=v}
+}
+try{
+  const raw=lsGet('rbx_hist');
+  hist=raw?JSON.parse(raw):[];
+  if(!Array.isArray(hist))hist=[];
+}catch(e){hist=[];}
+let favorites=[];
+try{const r=lsGet('rbx_favs');favorites=r?JSON.parse(r):[];if(!Array.isArray(favorites))favorites=[];}catch(e){favorites=[];}
+const archiveTimers={};
+const archiveLogs={};
+try{const r=lsGet('rbx_archive');const o=r?JSON.parse(r):{};Object.assign(archiveLogs,o||{});}catch(e){}
+
 async function F(url,opt={}){
   const t=encodeURIComponent(url);
   const r=await fetch(W+'/?url='+t,{method:opt.method||'GET',headers:opt.headers||{},body:opt.body||undefined});
@@ -230,7 +350,7 @@ function tab(n){
   document.getElementById('t-'+n).classList.add('on');
 }
 function goHome(){tab('lookup');document.getElementById('hero').style.display='block';document.getElementById('dossier').style.display='none';document.getElementById('dossier').innerHTML='';document.getElementById('st').textContent='';if(liveTimer){clearInterval(liveTimer);liveTimer=null}}
-function clearAll(){goHome();document.getElementById('q').value='';hist=[];localStorage.setItem('rbx_hist','[]')}
+function clearAll(){goHome();document.getElementById('q').value='';hist=[];lsSet('rbx_hist','[]')}
 function showHistory(){
   if(!hist.length){alert('History empty');return}
   const s=hist.map((h,i)=>`${i+1}. ${h.name||h.id} (${h.id})`).join('\n');
@@ -239,13 +359,267 @@ function showHistory(){
 }
 document.addEventListener('keydown',e=>{
   if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();document.getElementById('q').focus()}
-  if(e.key==='Enter'&&document.activeElement?.id==='q')scan();
+  if(e.key==='Enter'&&document.activeElement?.id==='q')runSearch();
 });
 function pLabel(t){
   return {0:{t:'Offline',c:'off'},1:{t:'Online — Browsing',c:'on'},2:{t:'In Experience',c:'game'},3:{t:'In Studio',c:'studio'},4:{t:'Invisible',c:'off'}}[t]||{t:'Offline',c:'off'};
 }
 function fmt(n){if(n==null)return'—';return n.toLocaleString()}
 function fDate(iso){if(!iso)return'—';try{return new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}catch{return iso}}
+
+async function scanPlace(){
+  const idn=document.getElementById('q').value.trim();
+  const st=document.getElementById('st');
+  const btn=document.getElementById('scanBtn');
+  if(!idn){st.className='st err';st.textContent='Place ID or name required';return}
+  btn.disabled=true;st.className='st';st.innerHTML='<span class="sp"></span>Scanning place…';
+  document.getElementById('dossier').style.display='none';
+  if(liveTimer){clearInterval(liveTimer);liveTimer=null}
+  try{
+    let placeId=null, universeId=null, gameData=null, searchHits=[];
+
+    async function loadGameByUniverse(uid){
+      const gr=await F('https://games.roblox.com/v1/games?universeIds='+uid);
+      if(!gr.ok)return null;
+      const gd=await gr.json();
+      return (gd.data||[])[0]||null;
+    }
+    async function universeFromPlace(pid){
+      try{
+        const r=await F('https://apis.roblox.com/universes/v1/places/'+pid+'/universe');
+        if(r.ok){
+          const d=await r.json();
+          if(d.universeId)return String(d.universeId);
+        }
+      }catch(e){}
+      return null;
+    }
+    async function resolveIcon(uid, pid){
+      // prefer universe icon
+      if(uid){
+        try{
+          const r=await F('https://thumbnails.roblox.com/v1/games/icons?universeIds='+uid+'&size=512x512&format=Png');
+          if(r.ok){
+            const d=await r.json();
+            const u=(d.data||[])[0]?.imageUrl;
+            if(u)return u;
+          }
+        }catch(e){}
+      }
+      if(pid){
+        try{
+          const r=await F('https://thumbnails.roblox.com/v1/places/gameicons?placeIds='+pid+'&size=512x512&format=Png&returnPolicy=PlaceHolder');
+          if(r.ok){
+            const d=await r.json();
+            const u=(d.data||[])[0]?.imageUrl;
+            if(u)return u;
+          }
+        }catch(e){}
+      }
+      return null;
+    }
+
+    if(/^\d+$/.test(idn)){
+      // try as place id first
+      placeId=idn;
+      universeId=await universeFromPlace(placeId);
+      if(universeId){
+        gameData=await loadGameByUniverse(universeId);
+      }
+      // try as universe id
+      if(!gameData){
+        gameData=await loadGameByUniverse(idn);
+        if(gameData){
+          universeId=String(gameData.id);
+          placeId=String(gameData.rootPlaceId||placeId||idn);
+        }
+      }
+      if(gameData&&!placeId)placeId=String(gameData.rootPlaceId||'');
+      if(gameData&&!universeId)universeId=String(gameData.id);
+    }else{
+      // name search
+      try{
+        const sr=await F('https://games.roblox.com/v1/games/list?model.keyword='+encodeURIComponent(idn)+'&model.maxRows=16');
+        if(sr.ok){
+          const sd=await sr.json();
+          searchHits=sd.games||sd.data||[];
+        }
+      }catch(e){}
+      if(!searchHits.length){
+        try{
+          const sr=await F('https://games.roblox.com/v1/games/list?keyword='+encodeURIComponent(idn)+'&maxRows=16');
+          if(sr.ok){
+            const sd=await sr.json();
+            searchHits=sd.games||sd.data||[];
+          }
+        }catch(e){}
+      }
+      if(!searchHits.length)throw new Error('No games found. Try a numeric Place ID from the Roblox URL.');
+      // show picker if multiple, else take first
+      if(searchHits.length>1){
+        st.textContent='';
+        document.getElementById('hero').style.display='none';
+        document.getElementById('dossier').style.display='block';
+        document.getElementById('dossier').innerHTML=`
+<button class="btn-back" onclick="goHome()">← Back</button>
+<div class="sub-label">Search results</div>
+<div class="sub-name">${String(idn).replace(/</g,'&lt;')}</div>
+<div class="gr-list">${searchHits.slice(0,16).map(g=>{
+  const pid=g.placeId||g.rootPlaceId||'';
+  const nm=(g.name||'Game').replace(/</g,'&lt;');
+  return `<div class="gr-item" style="cursor:pointer" onclick="document.getElementById('q').value='${pid||g.universeId}';scanPlace()">
+<div class="gi"><div class="gn">${nm}</div><div class="gr">Place ${pid||'—'} · Universe ${g.universeId||'—'}</div></div>
+<span style="color:var(--mu2)">→</span></div>`;
+}).join('')}</div>`;
+        btn.disabled=false;
+        return;
+      }
+      const g=searchHits[0];
+      placeId=String(g.placeId||g.rootPlaceId||'');
+      universeId=g.universeId?String(g.universeId):null;
+      if(!universeId&&placeId)universeId=await universeFromPlace(placeId);
+      if(universeId)gameData=await loadGameByUniverse(universeId);
+    }
+
+    if(!gameData&&!universeId&&!placeId)throw new Error('Place not found');
+
+    // final fill
+    if(!gameData&&universeId)gameData=await loadGameByUniverse(universeId);
+    if(gameData){
+      universeId=String(gameData.id);
+      placeId=String(gameData.rootPlaceId||placeId||'');
+    }
+
+    let votes=null, favCount=null, media=[];
+    const icon=await resolveIcon(universeId, placeId);
+    if(universeId){
+      const [vr,fcr,mr]=await Promise.allSettled([
+        F('https://games.roblox.com/v1/games/votes?universeIds='+universeId).then(r=>r.json()),
+        F('https://games.roblox.com/v1/games/'+universeId+'/favorites/count').then(r=>r.json()),
+        F('https://games.roblox.com/v1/games/'+universeId+'/media').then(r=>r.json())
+      ]);
+      if(vr.status==='fulfilled')votes=(vr.value?.data||[])[0]||null;
+      if(fcr.status==='fulfilled')favCount=fcr.value?.favoritesCount??fcr.value?.count??null;
+      if(mr.status==='fulfilled')media=mr.value?.data||[];
+    }
+
+    // media image urls via thumbnails assets
+    let mediaUrls=[];
+    const imageIds=media.filter(m=>m.imageId).map(m=>m.imageId).slice(0,8);
+    if(imageIds.length){
+      try{
+        const tr=await F('https://thumbnails.roblox.com/v1/assets?assetIds='+imageIds.join(',')+'&size=768x432&format=Png');
+        if(tr.ok){
+          const td=await tr.json();
+          mediaUrls=(td.data||[]).filter(x=>x.imageUrl).map(x=>x.imageUrl);
+        }
+      }catch(e){}
+    }
+
+    // subplaces / all places in universe
+    let placesList=[];
+    if(universeId){
+      try{
+        let cursor='';
+        for(let i=0;i<10;i++){
+          const url='https://develop.roblox.com/v1/universes/'+universeId+'/places?limit=100'+(cursor?'&cursor='+encodeURIComponent(cursor):'');
+          const pr=await F(url);
+          if(!pr.ok)break;
+          const pd=await pr.json();
+          placesList=placesList.concat(pd.data||[]);
+          cursor=pd.nextPageCursor||'';
+          if(!cursor)break;
+        }
+      }catch(e){console.warn('places list',e)}
+    }
+    // icons for places
+    let placeIcons={};
+    if(placesList.length){
+      const pids=placesList.map(p=>p.id).slice(0,100);
+      for(let i=0;i<pids.length;i+=50){
+        const chunk=pids.slice(i,i+50).join(',');
+        try{
+          const ir=await F('https://thumbnails.roblox.com/v1/places/gameicons?placeIds='+chunk+'&size=150x150&format=Png&returnPolicy=PlaceHolder');
+          if(ir.ok){
+            const idata=await ir.json();
+            (idata.data||[]).forEach(t=>{if(t.imageUrl)placeIcons[String(t.targetId)]=t.imageUrl});
+          }
+        }catch(e){}
+      }
+    }
+    const rootId=String(gameData?.rootPlaceId||placeId||'');
+
+    const name=gameData?.name||('Place '+placeId);
+    const desc=gameData?.description||'';
+    const creator=gameData?.creator||{};
+    const creatorName=creator.name||'—';
+    const creatorId=creator.id;
+    const creatorType=creator.type||'User';
+    const visits=gameData?.visits??null;
+    const playing=gameData?.playing??null;
+    const maxPlayers=gameData?.maxPlayers??null;
+    const created=gameData?.created;
+    const updated=gameData?.updated;
+    const genre=gameData?.genre||gameData?.genre_l1||'—';
+    const price=gameData?.price??0;
+    const up=votes?.upVotes??null;
+    const down=votes?.downVotes??null;
+    const ratio=(up!=null&&down!=null&&(up+down)>0)?Math.round(up/(up+down)*100)+'%':'—';
+
+    document.getElementById('hero').style.display='none';
+    document.getElementById('dossier').style.display='block';
+    document.getElementById('dossier').innerHTML=`
+<button class="btn-back" onclick="goHome()">← Back</button>
+<div class="sub-label">Place / Experience</div>
+<div class="sub-name">${String(name).replace(/</g,'&lt;')}</div>
+<div class="place-hero">
+  <img class="place-icon" src="${icon||''}" alt="" onerror="this.style.background='#151515';this.src=''"/>
+  <div>
+    <div class="card" style="margin-bottom:10px">
+      <div class="card-t" style="margin-bottom:8px">Overview</div>
+      <div class="info-row"><span class="k">Place ID</span><span class="v">${placeId||'—'}</span></div>
+      <div class="info-row"><span class="k">Universe ID</span><span class="v">${universeId||'—'}</span></div>
+      <div class="info-row"><span class="k">Creator</span><span class="v">${String(creatorName).replace(/</g,'&lt;')} (${creatorType})</span></div>
+      <div class="info-row"><span class="k">Genre</span><span class="v">${String(genre).replace(/</g,'&lt;')}</span></div>
+      <div class="info-row"><span class="k">Price</span><span class="v">${price?price+' R$':'Free'}</span></div>
+      <a class="btn-prof" href="https://www.roblox.com/games/${placeId||universeId}" target="_blank" rel="noopener">↗ Open on Roblox</a>
+      ${creatorId&&String(creatorType).toLowerCase()==='user'?`<button class="btn-prof" style="margin-top:8px" onclick="document.getElementById('q').value='${creatorId}';setMode('player');scan()">View creator profile</button>`:''}
+    </div>
+  </div>
+</div>
+<div class="stat-grid">
+  <div class="stat-c"><div class="l">Playing now</div><div class="v">${fmt(playing)}</div></div>
+  <div class="stat-c"><div class="l">Visits</div><div class="v">${fmt(visits)}</div></div>
+  <div class="stat-c"><div class="l">Favorites</div><div class="v">${fmt(favCount)}</div></div>
+  <div class="stat-c"><div class="l">Max players</div><div class="v">${fmt(maxPlayers)}</div></div>
+  <div class="stat-c"><div class="l">Likes</div><div class="v">${fmt(up)}</div></div>
+  <div class="stat-c"><div class="l">Dislikes</div><div class="v">${fmt(down)}</div></div>
+  <div class="stat-c"><div class="l">Like ratio</div><div class="v">${ratio}</div></div>
+  <div class="stat-c"><div class="l">Created</div><div class="v" style="font-size:1rem">${fDate(created)}</div></div>
+  <div class="stat-c"><div class="l">Updated</div><div class="v" style="font-size:1rem">${fDate(updated)}</div></div>
+</div>
+${desc?`<div class="card" style="margin-bottom:16px"><div class="card-t" style="margin-bottom:8px">Description</div><div style="font-size:13px;color:var(--mu);line-height:1.5;white-space:pre-wrap">${String(desc).slice(0,1500).replace(/</g,'&lt;')}</div></div>`:''}
+${mediaUrls.length?`<div class="card" style="margin-bottom:16px"><div class="card-t" style="margin-bottom:8px">Media</div><div style="display:flex;flex-wrap:wrap;gap:8px">${mediaUrls.map(u=>`<img src="${u}" style="width:140px;height:80px;object-fit:cover;border-radius:8px;border:1px solid var(--bd);background:#111" onerror="this.style.display='none'"/>`).join('')}</div></div>`:''}
+${placesList.length?`<div class="card"><div class="card-t" style="margin-bottom:10px">Places in universe · ${placesList.length}</div><div class="gr-list">${placesList.map(p=>{
+  const pid=String(p.id);
+  const isRoot=pid===rootId;
+  const icon=placeIcons[pid]||'';
+  const nm=String(p.name||('Place '+pid)).replace(/</g,'&lt;');
+  return `<div class="gr-item" style="gap:10px;cursor:pointer" onclick="document.getElementById('q').value='${pid}';scanPlace()">
+${icon?`<img src="${icon}" style="width:40px;height:40px;border-radius:8px;object-fit:cover;background:#222" onerror="this.style.display='none'"/>`:'<div style="width:40px;height:40px;border-radius:8px;background:#222"></div>'}
+<div class="gi"><div class="gn">${nm}${isRoot?' <span style="color:var(--gn);font-size:10px">ROOT</span>':''}</div><div class="gr">Place ID ${pid}</div></div>
+<span style="color:var(--mu2)">→</span>
+</div>`;
+}).join('')}</div></div>`:''}
+`;
+    st.textContent='';
+  }catch(e){
+    console.error(e);
+    st.className='st err';
+    st.textContent=e.message||'Place scan failed';
+  }finally{btn.disabled=false}
+}
+
 async function scan(){
   const idn=document.getElementById('q').value.trim();
   const st=document.getElementById('st');
@@ -275,16 +649,51 @@ async function scan(){
       F(`https://badges.roblox.com/v1/users/${userId}/badges?limit=25&sortOrder=Desc`).then(r=>r.json()),
       F('https://presence.roblox.com/v1/presence/users',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userIds:[+userId]})}).then(r=>r.json()),
       F(`https://thumbnails.roblox.com/v1/users/avatar?userIds=${userId}&size=720x720&format=Png&isCircular=false`).then(r=>r.json()),
-      F(`https://premiumfeatures.roblox.com/v1/users/${userId}/validate-membership`).then(r=>r.ok?r.json():null).catch(()=>null)
+      F(`https://premiumfeatures.roblox.com/v1/users/${userId}/validate-membership`).then(async r=>{const t=await r.text();try{return JSON.parse(t)}catch{return t}}).catch(()=>null)
     ]);
     const headshot=hs.status==='fulfilled'?hs.value?.data?.[0]?.imageUrl:null;
     const avatar=av.status==='fulfilled'?av.value?.data?.[0]?.imageUrl:null;
-    const friends=fr.status==='fulfilled'?fr.value?.count:null;
-    const followers=fo.status==='fulfilled'?fo.value?.count:null;
-    const following=fw.status==='fulfilled'?fw.value?.count:null;
+    const friends=fr.status==='fulfilled'?(fr.value?.count??fr.value?.Count??null):null;
+    const followers=fo.status==='fulfilled'?(fo.value?.count??fo.value?.Count??null):null;
+    const following=fw.status==='fulfilled'?(fw.value?.count??fw.value?.Count??null):null;
+    if(fo.status==='rejected')console.warn('followers count failed',fo.reason);
+    if(fr.status==='rejected')console.warn('friends count failed',fr.reason);
     const badges=bd.status==='fulfilled'?(bd.value?.data||[]):[];
     const presence=pr.status==='fulfilled'?pr.value?.userPresences?.[0]:null;
-    const isPrem=pm.status==='fulfilled'&&pm.value&&pm.value.subscription!=null;
+    let isPrem=null; // null = unknown (API often blocks public premium status)
+    if(pm.status==='fulfilled'&&pm.value!=null){
+      const v=pm.value;
+      if(v===true||v===1||v==='true')isPrem=true;
+      else if(v===false||v===0||v==='false')isPrem=false;
+      else if(typeof v==='object'){
+        if(v.subscription!=null||v.isPremium===true||v.premium===true||v.isSubscribed===true)isPrem=true;
+        else if(v.isPremium===false||v.premium===false)isPrem=false;
+      }
+    }
+    // try subscriptions endpoint
+    if(isPrem!==true){
+      try{
+        const sr=await F('https://premiumfeatures.roblox.com/v1/users/'+userId+'/subscriptions');
+        if(sr.ok){
+          const sd=await sr.json();
+          const sub=sd?.subscription||sd?.data||sd;
+          if(sub&&(sub.subscriptionId||sub.isSubscribed||sub.expiration||sub.renewal))isPrem=true;
+          else if(Array.isArray(sd)&&sd.length)isPrem=true;
+          else if(sd&&typeof sd==='object'&&Object.keys(sd).length&&!sd.errors)isPrem=true;
+        }
+      }catch(e){}
+    }
+    // roblox badges fallback (legacy BC / premium badges)
+    if(isPrem!==true){
+      try{
+        const br=await F('https://accountinformation.roblox.com/v1/users/'+userId+'/roblox-badges');
+        if(br.ok){
+          const bdj=await br.json();
+          const arr=Array.isArray(bdj)?bdj:(bdj.data||[]);
+          if(arr.some(b=>/premium|roblox\s*plus|builders\s*club/i.test(String(b.name||b.displayName||''))))isPrem=true;
+        }
+      }catch(e){}
+    }
     let gameInfo=null;
     if(presence?.userPresenceType===2&&presence?.universeId){
       try{
@@ -296,7 +705,15 @@ async function scan(){
     hist=hist.filter(h=>h.id!==userId);
     hist.unshift({id:userId,name:user.name,display:user.displayName});
     if(hist.length>20)hist=hist.slice(0,20);
-    localStorage.setItem('rbx_hist',JSON.stringify(hist));
+    lsSet('rbx_hist',JSON.stringify(hist));
+    // keep favorites in sync (name/avatar) across reloads
+    const fi=favorites.findIndex(f=>String(f.id)===String(userId));
+    if(fi>=0){
+      favorites[fi].name=user.name;
+      favorites[fi].displayName=user.displayName;
+      favorites[fi].headshot=headshot||avatar||favorites[fi].headshot||'';
+      saveFavs();
+    }
     render(curUser);
     st.textContent='';
     document.getElementById('hero').style.display='none';
@@ -311,8 +728,8 @@ async function scan(){
 function startLive(uid){
   liveSec=0;
   if(liveTimer)clearInterval(liveTimer);
-  liveTimer=setInterval(async()=>{
-    liveSec+=25;
+  const tick=async()=>{
+    liveSec+=1;
     const el=document.getElementById('liveSec');
     if(el)el.textContent=liveSec+'S';
     try{
@@ -337,7 +754,9 @@ function startLive(uid){
         else{stBadge.className='badge-on';stBadge.textContent=(p.userPresenceType===2?'IN GAME':p.userPresenceType===3?'STUDIO':'ONLINE')}
       }
     }catch{}
-  },25000);
+  };
+  tick();
+  liveTimer=setInterval(tick,1000);
 }
 function render(d){
   const{user,avatar,headshot,friends,followers,following,badges,presence,gameInfo,isPrem,userId}=d;
@@ -351,9 +770,12 @@ function render(d){
   const bgHtml=badges.length
     ?badges.slice(0,24).map(b=>`<div class="bg-item" title="${(b.name||'').replace(/"/g,'')}"><img src="https://thumbnails.roblox.com/v1/assets?assetIds=${b.iconImageId}&size=150x150&format=Png" onerror="this.parentNode.style.opacity='.3'"/></div>`).join('')
     :'<div style="color:var(--mu2);font-size:13px">No badges found.</div>';
+  const isFav=favorites.some(f=>String(f.id)===String(userId));
   document.getElementById('dossier').innerHTML=`
+<button class="btn-back" onclick="goHome()">← Back</button>
 <div class="sub-label">Subject</div>
-<div class="sub-name">${user.displayName||user.name}</div>
+<div class="sub-name">${user.displayName||user.name}<button class="btn-fav ${isFav?'on':''}" id="favBtn" onclick="toggleFav()">${isFav?'★ Favorited':'☆ Favorite'}</button></div>
+<div class="sub-user">@${user.name}</div>
 <div class="grid-top">
   <div class="av-card"><img src="${avatar||headshot||''}" alt="" onerror="this.style.opacity='.3'"/></div>
   <div class="r-col">
@@ -365,10 +787,10 @@ function render(d){
       <div class="act-line" id="actLine"><span class="dot ${pl.c}"></span>${actTxt}</div>
     </div>
     <div class="stats4">
-      <div class="stat-c"><div class="l">👥 Friends</div><div class="v">${fmt(friends)}</div></div>
-      <div class="stat-c"><div class="l">⊕ Followers</div><div class="v">${fmt(followers)}</div></div>
-      <div class="stat-c"><div class="l">↗ Following</div><div class="v">${fmt(following)}</div></div>
-      <div class="stat-c"><div class="l">🏅 Badges</div><div class="v">${fmt(badges.length)}</div></div>
+      <div class="stat-c"><div class="l">Friends</div><div class="v">${fmt(friends)}</div></div>
+      <div class="stat-c"><div class="l">Followers</div><div class="v">${fmt(followers)}</div></div>
+      <div class="stat-c"><div class="l">Following</div><div class="v">${fmt(following)}</div></div>
+      <div class="stat-c"><div class="l">Badges</div><div class="v">${fmt(badges.length)}</div></div>
     </div>
   </div>
 </div>
@@ -381,9 +803,9 @@ function render(d){
   </div>
   <div>
     <div class="flags">
-      <div class="flag"><div class="ic">👑</div><div class="l">Premium</div><div class="v">${isPrem?'Active':'Inactive'}</div></div>
-      <div class="flag"><div class="ic">🛡</div><div class="l">Verified</div><div class="v">${user.hasVerifiedBadge?'Yes':'Unverified'}</div></div>
-      <div class="flag"><div class="ic">ℹ</div><div class="l">Account</div><div class="v">${user.isBanned?'Banned':'Active'}</div></div>
+      <div class="flag"><div class="ic ic-bw">◆</div><div class="l">Roblox Plus</div><div class="v">${isPrem===true?'Active':(isPrem===false?'Inactive':'Unknown')}</div></div>
+      <div class="flag"><div class="ic ic-bw">◇</div><div class="l">Verified</div><div class="v">${user.hasVerifiedBadge?'Yes':'Unverified'}</div></div>
+      <div class="flag"><div class="ic ic-bw">○</div><div class="l">Account</div><div class="v">${user.isBanned?'Banned':'Active'}</div></div>
     </div>
     <div class="badges-sec">
       <div class="hd"><span class="t">Recent Badges</span><span class="c">${badges.length} entries</span></div>
@@ -391,18 +813,42 @@ function render(d){
     </div>
   </div>
 </div>
-<div class="bot-row">
-  <div class="load-card" id="frCard">
-    <div class="hd">👥 Friends Network <span id="frCnt"></span></div>
-    <button class="load-btn" id="frBtn" onclick="loadFriends('${userId}')">LOAD FRIENDS LIST</button>
-    <div class="friends-box" id="frBox"></div>
+<div class="d-tabs" id="dTabs">
+  <button type="button" class="on" data-pane="friends" onclick="dTab(this,'friends')">Friends</button>
+  <button type="button" data-pane="groups" onclick="dTab(this,'groups')">Groups</button>
+  <button type="button" data-pane="favgames" onclick="dTab(this,'favgames')">Favorite Games</button>
+  <button type="button" data-pane="created" onclick="dTab(this,'created')">Created</button>
+  <button type="button" data-pane="limiteds" onclick="dTab(this,'limiteds')">Limiteds</button>
+  <button type="button" data-pane="meta" onclick="dTab(this,'meta')">History & Social</button>
+</div>
+<div class="d-pane on" id="pane-friends">
+  <button class="load-btn" id="frBtn" onclick="loadFriends('${userId}')">Load friends list</button>
+  <div class="friends-box" id="frBox"></div>
+</div>
+<div class="d-pane" id="pane-groups">
+  <button class="load-btn" id="grBtn" onclick="loadGroups('${userId}')">Load groups</button>
+  <div class="groups-box" id="grBox"></div>
+</div>
+<div class="d-pane" id="pane-favgames">
+  <button class="load-btn" id="fgBtn" onclick="loadFavGames('${userId}')">Load favorite games</button>
+  <div class="groups-box" id="fgBox"></div>
+</div>
+<div class="d-pane" id="pane-created">
+  <button class="load-btn" id="cgBtn" onclick="loadCreatedGames('${userId}')">Load created experiences</button>
+  <div class="groups-box" id="cgBox"></div>
+</div>
+<div class="d-pane" id="pane-limiteds">
+  <button class="load-btn" id="invBtn" onclick="loadCollectibles('${userId}')">Load collectibles</button>
+  <div class="groups-box" id="invBox"></div>
+</div>
+<div class="d-pane" id="pane-meta">
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+    <button class="load-btn" id="unBtn" onclick="loadUsernames('${userId}')" style="width:auto;padding:10px 16px">Username history</button>
+    <button class="load-btn" id="socBtn" onclick="loadSocial('${userId}')" style="width:auto;padding:10px 16px">Social links</button>
   </div>
-  <div class="load-card" id="grCard">
-    <div class="hd">🏛 Groups <span id="grCnt"></span></div>
-    <button class="load-btn" id="grBtn" onclick="loadGroups('${userId}')">LOAD GROUPS</button>
-    <div class="groups-box" id="grBox"></div>
-  </div>
-</div>`;
+  <div class="groups-box" id="metaBox" style="display:block"></div>
+</div>
+`;
 }
 async function loadFriends(uid){
   const btn=document.getElementById('frBtn');
@@ -413,35 +859,40 @@ async function loadFriends(uid){
     if(!r.ok)throw new Error('Failed');
     const d=await r.json();
     const list=d.data||[];
-    document.getElementById('frCnt').textContent=list.length;
+    const _frCnt=document.getElementById('frCnt');if(_frCnt)_frCnt.textContent=list.length;
     if(!list.length){box.innerHTML='<div style="color:var(--mu2);font-size:13px;padding:8px 0">No friends</div>';box.style.display='block';btn.style.display='none';return}
-    const ids=list.slice(0,100).map(f=>f.id).join(',');
-    let thumbs={};
-    try{
-      const tr=await F(`https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${ids}&size=150x150&format=Png&isCircular=true`);
-      if(tr.ok){const td=await tr.json();(td.data||[]).forEach(t=>{thumbs[t.targetId]=t.imageUrl})}
-    }catch{}
+    const thumbs={};
+    const ids=list.map(f=>f.id);
+    for(let i=0;i<ids.length;i+=100){
+      const chunk=ids.slice(i,i+100).join(',');
+      try{
+        const tr=await F(`https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${chunk}&size=150x150&format=Png&isCircular=true`);
+        if(tr.ok){
+          const td=await tr.json();
+          (td.data||[]).forEach(t=>{
+            if(t.imageUrl)thumbs[String(t.targetId)]=t.imageUrl;
+          });
+        }
+      }catch(e){}
+    }
     box.innerHTML=`
 <div class="fr-wrap"><span class="fic">⌕</span>
 <input class="filter-in" id="frFilter" placeholder="Filter friends…" oninput="filterFr()"/>
 </div>
 <div class="fr-grid" id="frGrid">
-${list.map(f=>`
-<div class="fr-item" data-name="${(f.name||'').toLowerCase()} ${(f.displayName||'').toLowerCase()}" onclick="document.getElementById('q').value='${f.id}';scan()">
-<img src="${thumbs[f.id]||''}" onerror="this.style.background='#222'"/>
-<div class="nm">${f.displayName||f.name}</div>
+${list.map(f=>{
+  const img=thumbs[String(f.id)]||'';
+  const nm=(f.displayName||f.name||'').replace(/</g,'&lt;');
+  return `<div class="fr-item" data-name="${(f.name||'').toLowerCase()} ${(f.displayName||'').toLowerCase()}" onclick="document.getElementById('q').value='${f.id}';scan()">
+<img src="${img}" alt="" onerror="this.onerror=null;this.src='https://www.roblox.com/headshot-thumbnail/image?userId=${f.id}&width=150&height=150&format=png';"/>
+<div class="nm">${nm}</div>
 <div class="id">${f.id}</div>
-</div>`).join('')}
+</div>`;
+}).join('')}
 </div>`;
     box.style.display='block';
     btn.style.display='none';
-  }catch(e){btn.textContent='Retry';btn.disabled=false;alert('Failed to load friends')}
-}
-function filterFr(){
-  const q=(document.getElementById('frFilter')?.value||'').toLowerCase();
-  document.querySelectorAll('#frGrid .fr-item').forEach(el=>{
-    el.style.display=el.dataset.name.includes(q)?'':'none';
-  });
+  }catch(e){console.error(e);btn.textContent='Retry';btn.disabled=false;alert('Failed to load friends')}
 }
 async function loadGroups(uid){
   const btn=document.getElementById('grBtn');
@@ -452,7 +903,7 @@ async function loadGroups(uid){
     if(!r.ok)throw new Error('Failed');
     const d=await r.json();
     const list=d.data||[];
-    document.getElementById('grCnt').textContent=list.length;
+    const _grCnt=document.getElementById('grCnt');if(_grCnt)_grCnt.textContent=list.length;
     if(!list.length){box.innerHTML='<div style="color:var(--mu2);font-size:13px;padding:8px 0">No groups</div>';box.style.display='block';btn.style.display='none';return}
     box.innerHTML=`<div class="gr-list">${list.map(g=>{
       const gr=g.group||{};
@@ -465,6 +916,332 @@ async function loadGroups(uid){
     btn.style.display='none';
   }catch(e){btn.textContent='Retry';btn.disabled=false;alert('Failed to load groups')}
 }
+
+async function loadFavGames(uid){
+  const btn=document.getElementById('fgBtn');
+  const box=document.getElementById('fgBox');
+  btn.disabled=true;btn.textContent='Loading…';
+  try{
+    let list=[];
+    // primary: games.roblox.com v2
+    try{
+      const r=await F(`https://games.roblox.com/v2/users/${uid}/favorite/games?accessFilter=2&limit=50&sortOrder=Desc`);
+      if(r.ok){
+        const d=await r.json();
+        list=(d.data||[]).map(g=>({
+          id:g.id||g.universeId||g.rootPlace?.id,
+          universeId:g.id||g.universeId,
+          name:g.name,
+          rootPlaceId:g.rootPlace?.id||g.placeId,
+          visits:g.placeVisits||g.visits
+        }));
+      }
+    }catch(e){}
+    // fallback: list-json
+    if(!list.length){
+      try{
+        const r=await F(`https://www.roblox.com/users/favorites/list-json?assetTypeId=9&itemsPerPage=50&pageNumber=1&userId=${uid}`);
+        if(r.ok){
+          const d=await r.json();
+          const items=d?.Data?.Items||d?.data||d?.Items||[];
+          list=(Array.isArray(items)?items:[]).map(it=>{
+            const item=it.Item||it;
+            return {
+              id:item.AssetId||item.UniverseId||item.id,
+              name:item.Name||item.name,
+              rootPlaceId:item.AssetId||item.rootPlaceId,
+              icon:it.Thumbnail?.Url||item.ThumbnailUrl
+            };
+          }).filter(x=>x.name);
+        }
+      }catch(e){}
+    }
+    const _fgCnt=document.getElementById('fgCnt');if(_fgCnt)_fgCnt.textContent=list.length;
+    if(!list.length){
+      box.innerHTML='<div style="color:var(--mu2);font-size:13px;padding:8px 0">No favorite games (private or empty)</div>';
+      box.style.display='block';btn.style.display='none';return;
+    }
+    // thumbnails for universes
+    const uids=list.map(g=>g.universeId||g.id).filter(Boolean).slice(0,50);
+    let icons={};
+    if(uids.length){
+      try{
+        const tr=await F(`https://thumbnails.roblox.com/v1/games/icons?universeIds=${uids.join(',')}&size=150x150&format=Png`);
+        if(tr.ok){
+          const td=await tr.json();
+          (td.data||[]).forEach(t=>{if(t.imageUrl)icons[String(t.targetId)]=t.imageUrl});
+        }
+      }catch(e){}
+    }
+    box.innerHTML=`<div class="gr-list">${list.map(g=>{
+      const icon=icons[String(g.universeId||g.id)]||g.icon||'';
+      const place=g.rootPlaceId||g.id;
+      const nm=(g.name||'Game').replace(/</g,'&lt;');
+      return `<div class="gr-item" style="gap:10px">
+${icon?`<img src="${icon}" style="width:40px;height:40px;border-radius:8px;object-fit:cover;background:#222" onerror="this.style.display='none'"/>`:''}
+<div class="gi"><div class="gn">${nm}</div><div class="gr">${g.visits!=null?Number(g.visits).toLocaleString()+' visits':('ID '+place)}</div></div>
+<a href="https://www.roblox.com/games/${place}" target="_blank" rel="noopener">↗</a>
+</div>`;
+    }).join('')}</div>`;
+    box.style.display='block';
+    btn.style.display='none';
+  }catch(e){
+    console.error(e);
+    btn.textContent='Retry';btn.disabled=false;
+    alert('Failed to load favorite games');
+  }
+}
+
+
+async function loadCreatedGames(uid){
+  const btn=document.getElementById('cgBtn');
+  const box=document.getElementById('cgBox');
+  btn.disabled=true;btn.textContent='Loading…';
+  try{
+    let list=[], cursor='';
+    for(let i=0;i<3;i++){
+      const url=`https://games.roblox.com/v2/users/${uid}/games?accessFilter=2&limit=50&sortOrder=Desc`+(cursor?'&cursor='+encodeURIComponent(cursor):'');
+      const r=await F(url);
+      if(!r.ok)break;
+      const d=await r.json();
+      list=list.concat(d.data||[]);
+      cursor=d.nextPageCursor||'';
+      if(!cursor)break;
+    }
+    const _cgCnt=document.getElementById('cgCnt');if(_cgCnt)_cgCnt.textContent=list.length;
+    if(!list.length){box.innerHTML='<div style="color:var(--mu2);font-size:13px;padding:8px 0">No created experiences</div>';box.style.display='block';btn.style.display='none';return}
+    const uids=list.map(g=>g.id).filter(Boolean).slice(0,50);
+    let icons={};
+    if(uids.length){
+      try{
+        const tr=await F(`https://thumbnails.roblox.com/v1/games/icons?universeIds=${uids.join(',')}&size=150x150&format=Png`);
+        if(tr.ok){(await tr.json()).data?.forEach(t=>{if(t.imageUrl)icons[String(t.targetId)]=t.imageUrl})}
+      }catch(e){}
+    }
+    box.innerHTML=`<div class="gr-list">${list.map(g=>{
+      const place=g.rootPlace?.id||g.id;
+      const icon=icons[String(g.id)]||'';
+      const nm=(g.name||'Experience').replace(/</g,'&lt;');
+      return `<div class="gr-item" style="gap:10px">
+${icon?`<img src="${icon}" style="width:40px;height:40px;border-radius:8px;object-fit:cover;background:#222" onerror="this.style.display='none'"/>`:''}
+<div class="gi"><div class="gn">${nm}</div><div class="gr">${(g.placeVisits!=null?Number(g.placeVisits).toLocaleString()+' visits':'')}</div></div>
+<a href="https://www.roblox.com/games/${place}" target="_blank" rel="noopener">↗</a>
+</div>`}).join('')}</div>`;
+    box.style.display='block';btn.style.display='none';
+  }catch(e){console.error(e);btn.textContent='Retry';btn.disabled=false}
+}
+
+async function loadCollectibles(uid){
+  const btn=document.getElementById('invBtn');
+  const box=document.getElementById('invBox');
+  btn.disabled=true;btn.textContent='Loading…';
+  try{
+    let list=[], cursor='';
+    for(let i=0;i<5;i++){
+      const url=`https://inventory.roblox.com/v1/users/${uid}/assets/collectibles?limit=50&sortOrder=Desc`+(cursor?'&cursor='+encodeURIComponent(cursor):'');
+      const r=await F(url);
+      if(r.status===403||r.status===401){
+        box.innerHTML='<div style="color:var(--mu2);font-size:13px;padding:8px 0">Inventory is private</div>';
+        box.style.display='block';btn.style.display='none';return;
+      }
+      if(!r.ok)break;
+      const d=await r.json();
+      list=list.concat(d.data||[]);
+      cursor=d.nextPageCursor||'';
+      if(!cursor)break;
+    }
+    const _invCnt=document.getElementById('invCnt');if(_invCnt)_invCnt.textContent=list.length;
+    if(!list.length){box.innerHTML='<div style="color:var(--mu2);font-size:13px;padding:8px 0">No collectibles / private</div>';box.style.display='block';btn.style.display='none';return}
+    const assetIds=list.map(x=>x.assetId||x.id).filter(Boolean).slice(0,50);
+    let icons={};
+    if(assetIds.length){
+      try{
+        const tr=await F(`https://thumbnails.roblox.com/v1/assets?assetIds=${assetIds.join(',')}&size=150x150&format=Png`);
+        if(tr.ok){(await tr.json()).data?.forEach(t=>{if(t.imageUrl)icons[String(t.targetId)]=t.imageUrl})}
+      }catch(e){}
+    }
+    box.innerHTML=`<div class="gr-list">${list.slice(0,80).map(it=>{
+      const aid=it.assetId||it.id;
+      const nm=(it.name||'Item').replace(/</g,'&lt;');
+      const icon=icons[String(aid)]||'';
+      return `<div class="gr-item" style="gap:10px">
+${icon?`<img src="${icon}" style="width:40px;height:40px;border-radius:8px;object-fit:cover;background:#222" onerror="this.style.display='none'"/>`:''}
+<div class="gi"><div class="gn">${nm}</div><div class="gr">#${it.serialNumber!=null?it.serialNumber:'—'} · ${aid}</div></div>
+<a href="https://www.roblox.com/catalog/${aid}" target="_blank" rel="noopener">↗</a>
+</div>`}).join('')}</div>`;
+    box.style.display='block';btn.style.display='none';
+  }catch(e){console.error(e);btn.textContent='Retry';btn.disabled=false;alert('Failed (inventory may be private)')}
+}
+
+async function loadUsernames(uid){
+  const box=document.getElementById('metaBox');
+  const btn=document.getElementById('unBtn');
+  btn.disabled=true;
+  try{
+    const r=await F(`https://users.roblox.com/v1/users/${uid}/username-history?limit=50&sortOrder=Desc`);
+    if(!r.ok)throw new Error('Failed');
+    const d=await r.json();
+    const list=d.data||[];
+    if(!list.length){box.innerHTML='<div style="color:var(--mu2);font-size:13px;padding:8px 0">No previous usernames</div>';box.style.display='block';return}
+    box.innerHTML=`<div class="gr-list" style="margin-top:10px"><div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mu);margin-bottom:8px">Username History</div>${list.map(u=>`
+<div class="gr-item"><div class="gi"><div class="gn">${(u.name||'').replace(/</g,'&lt;')}</div></div></div>`).join('')}</div>`;
+    box.style.display='block';
+  }catch(e){alert('Failed to load username history')}
+  finally{btn.disabled=false}
+}
+
+async function loadSocial(uid){
+  const box=document.getElementById('metaBox');
+  const btn=document.getElementById('socBtn');
+  btn.disabled=true;
+  try{
+    let channels=null;
+    try{
+      const r=await F(`https://accountinformation.roblox.com/v1/users/${uid}/promotion-channels`);
+      if(r.ok)channels=await r.json();
+    }catch(e){}
+    if(!channels){
+      try{
+        const r=await F(`https://users.roblox.com/v1/users/${uid}/social`);
+        if(r.ok)channels=await r.json();
+      }catch(e){}
+    }
+    if(!channels||(typeof channels==='object'&&!Object.keys(channels).filter(k=>channels[k]).length)){
+      box.innerHTML='<div style="color:var(--mu2);font-size:13px;padding:8px 0;margin-top:10px">No public social links</div>';
+      box.style.display='block';return;
+    }
+    const entries=Object.entries(channels).filter(([k,v])=>v&&typeof v==='string'&&!['facebook','visibility'].includes(k.toLowerCase())||(v&&typeof v==='object'));
+    // promotion-channels shape: {facebook, twitter, youtube, twitch, guilded, ...}
+    const rows=[];
+    for(const [k,v] of Object.entries(channels)){
+      if(!v||k==='facebook'&&false)continue;
+      if(typeof v==='string'&&v.length>1){
+        const label=k.charAt(0).toUpperCase()+k.slice(1);
+        let href=v;
+        if(k.toLowerCase()==='twitter'||k.toLowerCase()==='x')href=v.startsWith('http')?v:'https://x.com/'+v.replace('@','');
+        else if(k.toLowerCase()==='youtube')href=v.startsWith('http')?v:'https://youtube.com/'+v;
+        else if(k.toLowerCase()==='twitch')href=v.startsWith('http')?v:'https://twitch.tv/'+v;
+        else if(k.toLowerCase()==='discord')href=v.startsWith('http')?v:v;
+        else if(!v.startsWith('http'))href='#';
+        rows.push(`<div class="gr-item"><div class="gi"><div class="gn">${label}</div><div class="gr">${String(v).replace(/</g,'&lt;')}</div></div>${href!=='#'?`<a href="${href}" target="_blank" rel="noopener">↗</a>`:''}</div>`);
+      }
+    }
+    box.innerHTML=rows.length?`<div class="gr-list" style="margin-top:10px"><div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mu);margin-bottom:8px">Social Links</div>${rows.join('')}</div>`:'<div style="color:var(--mu2);font-size:13px;padding:8px 0;margin-top:10px">No public social links</div>';
+    box.style.display='block';
+  }catch(e){alert('Failed to load social links')}
+  finally{btn.disabled=false}
+}
+
+async function resolveId(idn){
+  idn=String(idn).trim();
+  if(/^\d+$/.test(idn))return idn;
+  const rr=await F('https://users.roblox.com/v1/usernames/users',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({usernames:[idn],excludeBannedUsers:false})});
+  if(!rr.ok)throw new Error('Resolve failed');
+  const rd=await rr.json();
+  if(!rd.data?.length)throw new Error('User not found: '+idn);
+  return String(rd.data[0].id);
+}
+
+async function doCompare(){
+  const a=document.getElementById('cmpA').value.trim();
+  const b=document.getElementById('cmpB').value.trim();
+  const st=document.getElementById('cmpSt');
+  const res=document.getElementById('cmpRes');
+  if(!a||!b){st.className='st err';st.textContent='Enter both users';return}
+  st.className='st';st.innerHTML='<span class="sp"></span>Comparing…';
+  res.innerHTML='';
+  try{
+    const idA=await resolveId(a);
+    const idB=await resolveId(b);
+    const [infoA,infoB,frA,frB,grA,grB]=await Promise.all([
+      getName(idA),getName(idB),getFriends(idA),getFriends(idB),
+      F(`https://groups.roblox.com/v1/users/${idA}/groups/roles`).then(r=>r.ok?r.json():{data:[]}),
+      F(`https://groups.roblox.com/v1/users/${idB}/groups/roles`).then(r=>r.ok?r.json():{data:[]})
+    ]);
+    const setB=new Set(frB.map(f=>String(f.id)));
+    const sharedFriends=frA.filter(f=>setB.has(String(f.id)));
+    const gA=(grA.data||[]).map(x=>x.group).filter(Boolean);
+    const gB=(grB.data||[]).map(x=>x.group).filter(Boolean);
+    const setGB=new Set(gB.map(g=>String(g.id)));
+    const sharedGroups=gA.filter(g=>setGB.has(String(g.id)));
+    st.textContent='';
+    res.innerHTML=`
+<div class="card" style="margin-bottom:12px">
+  <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:14px">
+    <div><b>${infoA.displayName||infoA.name}</b><div style="color:var(--mu);font-size:12px">@${infoA.name} · ${idA}</div></div>
+    <div style="color:var(--mu2)">vs</div>
+    <div style="text-align:right"><b>${infoB.displayName||infoB.name}</b><div style="color:var(--mu);font-size:12px">@${infoB.name} · ${idB}</div></div>
+  </div>
+</div>
+<div class="stats4" style="margin-bottom:12px">
+  <div class="stat-c"><div class="l">Shared Friends</div><div class="v">${sharedFriends.length}</div></div>
+  <div class="stat-c"><div class="l">Shared Groups</div><div class="v">${sharedGroups.length}</div></div>
+  <div class="stat-c"><div class="l">Friends A / B</div><div class="v">${frA.length} / ${frB.length}</div></div>
+  <div class="stat-c"><div class="l">Groups A / B</div><div class="v">${gA.length} / ${gB.length}</div></div>
+</div>
+<div class="card" style="margin-bottom:12px">
+  <div class="card-t" style="margin-bottom:10px">Shared Friends</div>
+  ${sharedFriends.length?`<div class="fr-grid">${sharedFriends.slice(0,60).map(f=>`
+    <div class="fr-item" onclick="document.getElementById('q').value='${f.id}';tab('lookup');scan()">
+      <div class="nm">${(f.displayName||f.name||'').replace(/</g,'')}</div>
+      <div class="id">${f.id}</div>
+    </div>`).join('')}</div>`:'<div style="color:var(--mu2);font-size:13px">None</div>'}
+</div>
+<div class="card">
+  <div class="card-t" style="margin-bottom:10px">Shared Groups</div>
+  ${sharedGroups.length?`<div class="gr-list">${sharedGroups.map(g=>`
+    <div class="gr-item"><div class="gi"><div class="gn">${(g.name||'').replace(/</g,'')}</div><div class="gr">${(g.memberCount||0).toLocaleString()} members</div></div>
+    <a href="https://www.roblox.com/groups/${g.id}" target="_blank" rel="noopener">↗</a></div>`).join('')}</div>`:'<div style="color:var(--mu2);font-size:13px">None</div>'}
+</div>`;
+  }catch(e){
+    st.className='st err';
+    st.textContent=e.message||'Compare failed';
+  }
+}
+
+function exportAllArchives(fmt){
+  const ids=Object.keys(archiveLogs);
+  if(!ids.length){alert('No archive data');return}
+  if(fmt==='json'){
+    const blob=new Blob([JSON.stringify(archiveLogs,null,2)],{type:'application/json'});
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download='rbx-intel-archives.json';
+    a.click();
+    return;
+  }
+  let lines=['userId,game,joined,left,duration,date'];
+  for(const id of ids){
+    for(const e of (archiveLogs[id]||[])){
+      if(e.type==='session'){
+        const g=String(e.game||'').replace(/"/g,'');
+        lines.push('"'+id+'","'+g+'","'+(e.joined||'')+'","'+(e.left||'')+'","'+(e.duration||'')+'","'+(e.date||'')+'"');
+      }
+    }
+  }
+  const blob=new Blob([lines.join(String.fromCharCode(10))],{type:'text/csv'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='rbx-intel-archives.csv';
+  a.click();
+}
+
+function requestNotifPerm(){
+  if(!('Notification' in window)){alert('Notifications not supported');return}
+  Notification.requestPermission().then(p=>{
+    alert(p==='granted'?'Notifications enabled — you will be alerted when a favorited user joins a game (while Archive is recording).':'Permission: '+p);
+  });
+}
+
+function notifyJoin(id, gameName){
+  try{
+    if(!('Notification' in window)||Notification.permission!=='granted')return;
+    const fav=favorites.find(f=>String(f.id)===String(id));
+    const title=(fav?.displayName||fav?.name||id)+' joined a game';
+    new Notification(title,{body:gameName||'Experience',silent:false});
+  }catch(e){}
+}
+
 async function getFriends(uid){
   const r=await F(`https://friends.roblox.com/v1/users/${uid}/friends`);
   if(!r.ok)return[];
@@ -474,10 +1251,13 @@ async function getFriends(uid){
 async function getHead(uid){
   try{
     const r=await F(`https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${uid}&size=150x150&format=Png&isCircular=true`);
-    if(!r.ok)return null;
-    const d=await r.json();
-    return d.data?.[0]?.imageUrl||null;
-  }catch{return null}
+    if(r.ok){
+      const d=await r.json();
+      const u=d.data?.[0]?.imageUrl;
+      if(u)return u;
+    }
+  }catch{}
+  return `https://www.roblox.com/headshot-thumbnail/image?userId=${uid}&width=150&height=150&format=png`;
 }
 async function getName(uid){
   try{
@@ -494,7 +1274,7 @@ async function trace(){
   const res=document.getElementById('cRes');
   if(!/^\d+$/.test(from)||!/^\d+$/.test(to)){st.className='st err';st.textContent='Both IDs must be numeric';return}
   if(from===to){st.className='st';st.textContent='Same user — 0 degrees';res.innerHTML='';return}
-  st.className='st';st.innerHTML='<span class="sp"></span>Tracing path (up to 3 degrees)…';
+  st.className='st';st.innerHTML='<span class="sp"></span>Tracing all connections (up to 3 degrees)…';
   res.innerHTML='';
   try{
     const fromInfo=await getName(from);
@@ -502,93 +1282,416 @@ async function trace(){
     const fromHead=await getHead(from);
     const toHead=await getHead(to);
     const f1=await getFriends(from);
+    const f1ids=new Set(f1.map(f=>String(f.id)));
+
+    // 1 degree: direct friends
     const direct=f1.find(f=>String(f.id)===to);
     if(direct){
       st.textContent='';
-      res.innerHTML=treeHtml(1,[{...fromInfo,head:fromHead},{id:to,name:direct.name,displayName:direct.displayName,head:toHead}],0);
+      res.innerHTML=treeHtml(1,[{...fromInfo,head:fromHead},{id:to,name:direct.name,displayName:direct.displayName,head:toHead}],[],0);
       return;
     }
-    st.innerHTML='<span class="sp"></span>Checking 2nd degree…';
-    const f1ids=new Set(f1.map(f=>String(f.id)));
-    let found2=null;
-    const batch=f1.slice(0,40);
-    for(const fr of batch){
-      const ff=await getFriends(fr.id);
-      const hit=ff.find(x=>String(x.id)===to);
-      if(hit){
-        const midHead=await getHead(fr.id);
-        found2=[{...fromInfo,head:fromHead},{id:fr.id,name:fr.name,displayName:fr.displayName,head:midHead},{id:to,name:hit.name||toInfo.name,displayName:hit.displayName||toInfo.displayName,head:toHead}];
-        break;
-      }
-    }
-    if(found2){
+
+    // 2 degree: ALL mutual friends (friends of from who are also friends of to)
+    st.innerHTML='<span class="sp"></span>Checking 2nd degree — all mutuals…';
+    const tFriends=await getFriends(to);
+    const tIds=new Set(tFriends.map(f=>String(f.id)));
+    const mutuals=f1.filter(f=>tIds.has(String(f.id)));
+
+    if(mutuals.length){
+      // load heads for mutuals (max 30)
+      const show=mutuals.slice(0,30);
+      const heads={};
+      const ids=show.map(m=>m.id).join(',');
+      try{
+        const tr=await F(`https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${ids}&size=150x150&format=Png&isCircular=true`);
+        if(tr.ok){const td=await tr.json();(td.data||[]).forEach(t=>{heads[t.targetId]=t.imageUrl})}
+      }catch{}
+      const midNodes=show.map(m=>({id:m.id,name:m.name,displayName:m.displayName,head:heads[m.id]||null}));
       st.textContent='';
-      res.innerHTML=treeHtml(2,found2,1);
+      res.innerHTML=treeHtml(2,[{...fromInfo,head:fromHead},{id:to,name:toInfo.name,displayName:toInfo.displayName,head:toHead}],midNodes,mutuals.length);
       return;
     }
-    st.innerHTML='<span class="sp"></span>Checking 3rd degree (limited sample)…';
-    let found3=null;
-    const sample=batch.slice(0,12);
-    outer: for(const fr of sample){
+
+    // 3 degree: sample paths through friends-of-friends
+    st.innerHTML='<span class="sp"></span>Checking 3rd degree (sampled)…';
+    let found3=[];
+    const sample=f1.slice(0,15);
+    for(const fr of sample){
       const ff=await getFriends(fr.id);
-      const mid2sample=ff.slice(0,15);
-      for(const m2 of mid2sample){
-        if(f1ids.has(String(m2.id))||String(m2.id)===from)continue;
-        const f3=await getFriends(m2.id);
-        const hit=f3.find(x=>String(x.id)===to);
-        if(hit){
-          const h1=await getHead(fr.id);
-          const h2=await getHead(m2.id);
-          found3=[
-            {...fromInfo,head:fromHead},
-            {id:fr.id,name:fr.name,displayName:fr.displayName,head:h1},
-            {id:m2.id,name:m2.name,displayName:m2.displayName,head:h2},
-            {id:to,name:hit.name||toInfo.name,displayName:hit.displayName||toInfo.displayName,head:toHead}
-          ];
-          break outer;
+      const mid2=ff.filter(m=>tIds.has(String(m.id))||(await (async()=>{
+        // check if m is friend of target - already have tIds from target's friends
+        return tIds.has(String(m.id));
+      })()));
+      // better: mid2 who are in tFriends
+      const bridges=ff.filter(m=>tIds.has(String(m.id)));
+      if(bridges.length){
+        const h1=await getHead(fr.id);
+        for(const b of bridges.slice(0,3)){
+          found3.push({
+            path:[
+              {...fromInfo,head:fromHead},
+              {id:fr.id,name:fr.name,displayName:fr.displayName,head:h1},
+              {id:b.id,name:b.name,displayName:b.displayName,head:await getHead(b.id)},
+              {id:to,name:toInfo.name,displayName:toInfo.displayName,head:toHead}
+            ]
+          });
         }
+        if(found3.length>=5)break;
       }
     }
-    if(found3){
+    // also: friends of from -> their friends who friend target
+    if(!found3.length){
+      for(const fr of sample){
+        const ff=await getFriends(fr.id);
+        for(const m2 of ff.slice(0,12)){
+          if(f1ids.has(String(m2.id))||String(m2.id)===from||String(m2.id)===to)continue;
+          const f3=await getFriends(m2.id);
+          if(f3.some(x=>String(x.id)===to)){
+            const h1=await getHead(fr.id);
+            const h2=await getHead(m2.id);
+            found3.push({path:[
+              {...fromInfo,head:fromHead},
+              {id:fr.id,name:fr.name,displayName:fr.displayName,head:h1},
+              {id:m2.id,name:m2.name,displayName:m2.displayName,head:h2},
+              {id:to,name:toInfo.name,displayName:toInfo.displayName,head:toHead}
+            ]});
+            if(found3.length>=5)break;
+          }
+        }
+        if(found3.length>=5)break;
+      }
+    }
+    if(found3.length){
       st.textContent='';
-      res.innerHTML=treeHtml(3,found3,1);
+      let html='<div class="tree"><div class="tree-hd"><div><span class="deg">3</span><span class="deg-l">Degrees of Separation</span></div><div class="mut">'+found3.length+' path(s) found</div></div>';
+      found3.forEach((fp,idx)=>{
+        html+='<div style="margin-bottom:20px">';
+        if(found3.length>1)html+='<div style="font-size:11px;color:var(--mu2);margin-bottom:8px;text-align:center">Path '+(idx+1)+'</div>';
+        html+='<div class="tree-path">';
+        fp.path.forEach((n,i)=>{
+          html+=`<div class="t-node" onclick="document.getElementById('q').value='${n.id}';tab('lookup');scan()">
+<img src="${n.head||''}" onerror="this.style.background='#333'"/>
+<div><div class="tn">${n.displayName||n.name||n.id}</div><div class="tid">${n.id}</div></div>
+</div>`;
+          if(i<fp.path.length-1)html+='<div class="t-arrow"></div>';
+        });
+        html+='</div></div>';
+      });
+      html+='</div>';
+      res.innerHTML=html;
       return;
     }
     st.className='st';
-    st.textContent='No path found within 3 degrees (sampled). Try closer users or wait — rate limits apply.';
+    st.textContent='No path found within 3 degrees (sampled). Rate limits may apply.';
   }catch(e){
+    console.error(e);
     st.className='st err';
     st.textContent=e.message||'Trace failed';
   }
 }
-function treeHtml(deg,nodes,mutual){
-  const nodesHtml=nodes.map((n,i)=>{
-    const arrow=i<nodes.length-1?'<div class="t-arrow"></div>':'';
-    return `<div class="t-node" onclick="document.getElementById('q').value='${n.id}';tab('lookup');scan()">
+function treeHtml(deg,ends,mids,mutualCount){
+  // ends = [from, to], mids = array of intermediate friends (all mutuals for 2deg)
+  const from=ends[0], to=ends[ends.length-1];
+  let body='';
+  if(deg===1){
+    body=`<div class="tree-path">
+<div class="t-node" onclick="document.getElementById('q').value='${from.id}';tab('lookup');scan()">
+<img src="${from.head||''}" onerror="this.style.background='#333'"/>
+<div><div class="tn">${from.displayName||from.name||from.id}</div><div class="tid">${from.id}</div></div>
+</div>
+<div class="t-arrow"></div>
+<div class="t-node" onclick="document.getElementById('q').value='${to.id}';tab('lookup');scan()">
+<img src="${to.head||''}" onerror="this.style.background='#333'"/>
+<div><div class="tn">${to.displayName||to.name||to.id}</div><div class="tid">${to.id}</div></div>
+</div>
+</div>`;
+  } else if(deg===2 && mids.length){
+    // from at top, then ALL mutual friends in a row/grid, then target at bottom
+    const midsHtml=mids.map(m=>`
+<div class="t-node" style="min-width:140px" onclick="document.getElementById('q').value='${m.id}';tab('lookup');scan()">
+<img src="${m.head||''}" onerror="this.style.background='#333'"/>
+<div><div class="tn">${m.displayName||m.name||m.id}</div><div class="tid">${m.id}</div></div>
+</div>`).join('');
+    body=`<div class="tree-path">
+<div class="t-node" onclick="document.getElementById('q').value='${from.id}';tab('lookup');scan()">
+<img src="${from.head||''}" onerror="this.style.background='#333'"/>
+<div><div class="tn">${from.displayName||from.name||from.id}</div><div class="tid">${from.id}</div></div>
+</div>
+<div class="t-arrow"></div>
+<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:100%;padding:8px 0">${midsHtml}</div>
+<div class="t-arrow"></div>
+<div class="t-node" onclick="document.getElementById('q').value='${to.id}';tab('lookup');scan()">
+<img src="${to.head||''}" onerror="this.style.background='#333'"/>
+<div><div class="tn">${to.displayName||to.name||to.id}</div><div class="tid">${to.id}</div></div>
+</div>
+</div>`;
+  } else {
+    // fallback linear
+    body=`<div class="tree-path">`+ends.map((n,i)=>{
+      const arrow=i<ends.length-1?'<div class="t-arrow"></div>':'';
+      return `<div class="t-node" onclick="document.getElementById('q').value='${n.id}';tab('lookup');scan()">
 <img src="${n.head||''}" onerror="this.style.background='#333'"/>
 <div><div class="tn">${n.displayName||n.name||n.id}</div><div class="tid">${n.id}</div></div>
 </div>${arrow}`;
-  }).join('');
+    }).join('')+`</div>`;
+  }
   return `<div class="tree">
 <div class="tree-hd">
 <div><span class="deg">${deg}</span><span class="deg-l">Degrees of Separation</span></div>
-<div class="mut">${mutual?mutual+' mutual':''}</div>
+<div class="mut">${mutualCount?mutualCount+' mutual':''}</div>
 </div>
-<div class="tree-path">${nodesHtml}</div>
+${body}
 </div>`;
 }
+
+function saveFavs(){lsSet('rbx_favs',JSON.stringify(favorites))}
+function saveArchive(){lsSet('rbx_archive',JSON.stringify(archiveLogs))}
+
+function toggleFav(){
+  if(!curUser)return;
+  const id=String(curUser.userId);
+  const idx=favorites.findIndex(f=>String(f.id)===id);
+  if(idx>=0){
+    favorites.splice(idx,1);
+    stopArchive(id);
+  }else{
+    favorites.unshift({
+      id:id,
+      name:curUser.user.name,
+      displayName:curUser.user.displayName,
+      headshot:curUser.headshot||curUser.avatar||'',
+      addedAt:Date.now()
+    });
+  }
+  saveFavs();
+  const btn=document.getElementById('favBtn');
+  if(btn){
+    const on=favorites.some(f=>String(f.id)===id);
+    btn.className='btn-fav '+(on?'on':'');
+    btn.textContent=on?'★ Favorited':'☆ Favorite';
+  }
+  renderFavList();
+}
+
+function renderFavList(){
+  const el=document.getElementById('favList');
+  if(!el)return;
+  if(!favorites.length){
+    el.innerHTML='<div style="color:var(--mu2);font-size:13px">No favorites yet. Open a profile and tap ★ Favorite.</div>';
+    return;
+  }
+  el.innerHTML=favorites.map(f=>{
+    const arching=!!archiveTimers[f.id];
+    const logs=(archiveLogs[f.id]||[]);
+    const st=archiveState[f.id];
+    let liveLine='';
+    if(arching&&st&&st.inGame){
+      liveLine=`<div class="arch-row" style="border-color:var(--gn)"><span class="t">NOW</span><span class="g">Playing «${st.gameName||'Experience'}» · ${fmtDur(Date.now()-st.joinedAt)} (since ${fmtClock(st.joinedAt)})</span></div>`;
+    }
+    const rows=logs.slice().reverse().map(e=>{
+      if(e.type==='session')return `<div class="arch-row"><span class="t">${e.date||e.time||''}</span><span class="g">«${e.game}» · ${e.joined} → ${e.left} · played ${e.duration}</span></div>`;
+      return `<div class="arch-row"><span class="t">${e.time||''}</span><span class="g">${e.status||''}</span></div>`;
+    }).join('');
+    const archHtml=arching||logs.length?`
+<div class="arch-box" id="arch-${f.id}">
+<div class="ah">Archive History · ${logs.length} sessions ${arching?'· RECORDING':''}</div>
+${liveLine}
+${rows||'<div style="color:var(--mu2);font-size:12px">No sessions yet. Waiting for game join…</div>'}
+</div>`:'';
+    return `<div class="fav-card">
+<img src="${f.headshot||''}" onerror="this.style.background='#222'"/>
+<div class="fi"><div class="fn">${f.displayName||f.name}</div><div class="fsub">@${f.name} · ${f.id}</div></div>
+<div class="fbtns">
+<button onclick="document.getElementById('q').value='${f.id}';tab('lookup');scan()">Open</button>
+<button class="${arching?'arch-on':''}" onclick="toggleArchive('${f.id}')">${arching?'⏹ Stop Archive':'▶ Archive History'}</button>
+<button onclick="removeFav('${f.id}')">Remove</button>
+<button onclick="clearArchive('${f.id}')">Clear Log</button>
+</div>
+${archHtml}
+</div>`;
+  }).join('');
+}
+
+function removeFav(id){
+  stopArchive(id);
+  favorites=favorites.filter(f=>String(f.id)!==String(id));
+  saveFavs();
+  renderFavList();
+}
+
+async function pollPresenceOnce(uid){
+  const pr=await F('https://presence.roblox.com/v1/presence/users',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userIds:[+uid]})});
+  if(!pr.ok)return null;
+  const pd=await pr.json();
+  const p=pd.userPresences?.[0];
+  if(!p)return null;
+  let gameName='';
+  if(p.userPresenceType===2&&p.universeId){
+    try{const gr=await F(`https://games.roblox.com/v1/games?universeIds=${p.universeId}`);if(gr.ok){const gd=await gr.json();gameName=gd.data?.[0]?.name||''}}catch{}
+  }
+  if(!gameName&&p.lastLocation)gameName=p.lastLocation;
+  const pl=pLabel(p.userPresenceType);
+  let status=pl.t;
+  if(p.userPresenceType===2&&gameName)status='In Experience — '+gameName;
+  else if(p.userPresenceType===3)status='In Studio';
+  return {status,type:p.userPresenceType,game:gameName};
+}
+
+const archiveState={}; // id -> {inGame, gameName, joinedAt, lastStatus}
+
+function fmtDur(ms){
+  if(ms<0)ms=0;
+  const s=Math.floor(ms/1000);
+  const h=Math.floor(s/3600), m=Math.floor((s%3600)/60), sec=s%60;
+  if(h>0)return h+'h '+m+'m '+sec+'s';
+  if(m>0)return m+'m '+sec+'s';
+  return sec+'s';
+}
+function fmtClock(ts){
+  return new Date(ts).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
+function fmtDate(ts){
+  return new Date(ts).toLocaleDateString('en-GB',{day:'2-digit',month:'short'})+' '+fmtClock(ts);
+}
+
+function renderArchBox(id, recording){
+  const box=document.getElementById('arch-'+id);
+  if(!box)return;
+  const logs=archiveLogs[id]||[];
+  const st=archiveState[id];
+  let live='';
+  if(recording&&st&&st.inGame){
+    const elapsed=fmtDur(Date.now()-st.joinedAt);
+    live=`<div class="arch-row" style="border-color:var(--gn)"><span class="t">NOW</span><span class="g">Playing «${st.gameName||'Experience'}» · ${elapsed} (since ${fmtClock(st.joinedAt)})</span></div>`;
+  }
+  box.innerHTML=`<div class="ah">Archive History · ${logs.length} sessions ${recording?'· RECORDING':''}</div>`+
+    live+
+    (logs.length?logs.slice().reverse().map(e=>{
+      if(e.type==='session'){
+        return `<div class="arch-row"><span class="t">${e.date||e.time}</span><span class="g">«${e.game}» · ${e.joined} → ${e.left} · played ${e.duration}</span></div>`;
+      }
+      return `<div class="arch-row"><span class="t">${e.time}</span><span class="g">${e.status}</span></div>`;
+    }).join(''):'<div style="color:var(--mu2);font-size:12px">No sessions yet. Waiting for game join…</div>');
+}
+
+function toggleArchive(id){
+  if(archiveTimers[id]){stopArchive(id);renderFavList();return}
+  if(!archiveLogs[id])archiveLogs[id]=[];
+  if(!archiveState[id])archiveState[id]={inGame:false,gameName:'',joinedAt:0,lastStatus:''};
+
+  const run=async()=>{
+    try{
+      const info=await pollPresenceOnce(id);
+      if(!info)return;
+      const st=archiveState[id];
+      const now=Date.now();
+      const playing=info.type===2; // In Experience
+      const game=info.game||'Unknown Experience';
+
+      // JOINED a game
+      if(playing && !st.inGame){
+        st.inGame=true;
+        st.gameName=game;
+        st.joinedAt=now;
+        st.lastStatus=info.status;
+        notifyJoin(id, game);
+      }
+      // still in game — update name if changed (teleport)
+      else if(playing && st.inGame){
+        if(game && game!==st.gameName && game!=='Unknown Experience'){
+          // close previous session, open new
+          const dur=fmtDur(now-st.joinedAt);
+          archiveLogs[id].push({
+            type:'session',
+            game:st.gameName,
+            joined:fmtClock(st.joinedAt),
+            left:fmtClock(now),
+            duration:dur,
+            date:fmtDate(st.joinedAt),
+            ts:st.joinedAt,
+            playedMs:now-st.joinedAt
+          });
+          if(archiveLogs[id].length>200)archiveLogs[id]=archiveLogs[id].slice(-200);
+          saveArchive();
+          st.gameName=game;
+          st.joinedAt=now;
+        }
+      }
+      // LEFT a game
+      else if(!playing && st.inGame){
+        const dur=fmtDur(now-st.joinedAt);
+        archiveLogs[id].push({
+          type:'session',
+          game:st.gameName||'Experience',
+          joined:fmtClock(st.joinedAt),
+          left:fmtClock(now),
+          duration:dur,
+          date:fmtDate(st.joinedAt),
+          ts:st.joinedAt,
+          playedMs:now-st.joinedAt
+        });
+        if(archiveLogs[id].length>200)archiveLogs[id]=archiveLogs[id].slice(-200);
+        saveArchive();
+        st.inGame=false;
+        st.gameName='';
+        st.joinedAt=0;
+      }
+      st.lastStatus=info.status;
+      renderArchBox(id, true);
+    }catch(e){}
+  };
+  run();
+  archiveTimers[id]=setInterval(run,1000);
+  renderFavList();
+}
+function stopArchive(id){
+  if(archiveTimers[id]){clearInterval(archiveTimers[id]);delete archiveTimers[id]}
+  // close open session if still in game
+  const st=archiveState[id];
+  if(st&&st.inGame){
+    const now=Date.now();
+    if(!archiveLogs[id])archiveLogs[id]=[];
+    archiveLogs[id].push({
+      type:'session',
+      game:st.gameName||'Experience',
+      joined:fmtClock(st.joinedAt),
+      left:fmtClock(now),
+      duration:fmtDur(now-st.joinedAt),
+      date:fmtDate(st.joinedAt),
+      ts:st.joinedAt,
+      playedMs:now-st.joinedAt
+    });
+    st.inGame=false;st.gameName='';st.joinedAt=0;
+    saveArchive();
+  }
+}
+function clearArchive(id){
+  archiveLogs[id]=[];
+  saveArchive();
+  renderFavList();
+}
+
+const _origTab=tab;
+tab=function(n){
+  _origTab(n);
+  if(n==='favorites')renderFavList();
+};
+
+
 function linkMe(){
   const id=document.getElementById('myId').value.trim();
   const st=document.getElementById('mySt');
   if(!/^\d+$/.test(id)){st.className='st err';st.textContent='Enter numeric User ID';return}
-  localStorage.setItem('my_roblox_id',id);
+  lsSet('my_roblox_id',id);
   st.className='st';st.textContent='Linked '+id;
   document.getElementById('q').value=id;
   document.getElementById('cFrom').value=id;
   tab('lookup');
   scan();
 }
-const saved=localStorage.getItem('my_roblox_id');
+window.addEventListener('pagehide',()=>{try{saveFavs();saveArchive();lsSet('rbx_hist',JSON.stringify(hist))}catch(e){}});
+const saved=lsGet('my_roblox_id');
 if(saved){document.getElementById('myId').value=saved;document.getElementById('cFrom').value=saved}
 </script>
 </body>
