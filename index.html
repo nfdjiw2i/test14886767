@@ -639,9 +639,9 @@
 
   <script>
     // ============ CONFIG ============
-    // Вставь сюда URL своего Cloudflare Worker после деплоя
-    // Пример: https://rbx-proxy.твой-ник.workers.dev
-    let WORKER_URL = localStorage.getItem('rbx_worker_url') || '';
+    // Твой Cloudflare Worker (уже вшит)
+    const DEFAULT_WORKER = 'https://delicate-band-b5fd.lvlyvcbcla.workers.dev';
+    let WORKER_URL = localStorage.getItem('rbx_worker_url') || DEFAULT_WORKER;
 
     document.getElementById('workerUrl').value = WORKER_URL;
 
